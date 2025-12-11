@@ -1,0 +1,836 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedsharepointonline_aed49"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedsharepointonline_aaf43"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedoffice365_ccf66"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_office365users": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedoffice365users_98d3e"
+        },
+        "api": {
+          "name": "shared_office365users"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_an_item_is_created": {
+          "recurrence": {
+            "interval": 1,
+            "frequency": "Minute"
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "911d9a7f-e467-4b3d-a6e6-76ec0d94787a"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetOnNewItems",
+              "connectionName": "shared_sharepointonline-1"
+            }
+          },
+          "conditions": [],
+          "description": "Evento: Un usuario con los permisos necesarios sobre la lista crea un nuevo elemento (nuevo proyecto) en la lista maestra de proyectos CapEx en Argentina (sitio Sharepoint ALLOPS)."
+        }
+      },
+      "actions": {
+        "in_var_-_Número_de_serie_(vacía)": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "86529f58-1d86-491c-b00b-df58731e2df6"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varSerialN",
+                "type": "integer"
+              }
+            ]
+          },
+          "description": "Se crea variable de número de serie"
+        },
+        "in_var_-__Número_de_serie_3_dígitos_(vacía)": {
+          "runAfter": {
+            "in_var_-_Número_de_serie_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "64b7cbcc-c03b-45cd-b8ab-177183a4a76f"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "var3digitSerielN",
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Se crea variable de número de serie de 3 dígitos"
+        },
+        "in_var_-_CPX_ID_(vacía)": {
+          "runAfter": {
+            "in_var_-__Número_de_serie_3_dígitos_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "cf439dd1-ffb4-45da-b0f5-908f5ec59b1e"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varCPXID",
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Se crea variable para el CPX ID"
+        },
+        "Get_items": {
+          "runAfter": {
+            "in_var_-_Organizational_Area_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "dcc7cc52-a4c7-4f3e-b793-5f7e4c458877"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5",
+              "$filter": "@concat(\r\n  'Fiscalyear eq ''', variables('varFY'),\r\n  ''' and RPA_x0020_Type eq ''', triggerBody()?['RPA_x0020_Type/Value'],\r\n  ''' and Company_x0020_ISO_x0020_Cod eq ''', triggerBody()?['Company_x0020_ISO_x0020_Cod/Value'], ''''\r\n)"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetItems",
+              "connectionName": "shared_sharepointonline"
+            }
+          },
+          "description": "Se obtienen cantidad de items filtrando por FY, OA y CIC"
+        },
+        "set_var_-Número_de_serie_": {
+          "runAfter": {
+            "Asignación_de_área_segín_OA": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7ca2a7f5-70c0-470c-9b58-81441105a58a"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "varSerialN",
+            "value": "@add(length(body('Get_items')?['value']), 1)"
+          },
+          "description": "Se le da el valor al Número de serie como cantidad de ítems +1"
+        },
+        "set_var_-_Número_de_serie_3_dig._": {
+          "runAfter": {
+            "set_var_-Número_de_serie_": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "c412bbe7-bbbf-4eec-bd48-bc8c562344d9"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "var3digitSerielN",
+            "value": "@substring(concat('000', string(variables('varSerialN'))), sub(length(concat('000', string(variables('varSerialN')))), 3), 3)"
+          },
+          "description": "Se agrega tres 0 al número de serie y se substraen los dígitos para dejar solo 3."
+        },
+        "Update_item": {
+          "runAfter": {
+            "Get_manager_(V2)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d89a7e0a-5564-45e7-93d2-af20103dd5a4"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5",
+              "id": "@triggerBody()?['ID']",
+              "item/OData__x002b_info": ".",
+              "item/Gantt": ".",
+              "item/Dashboard": ".",
+              "item/RPA_x0020_Name": "@triggerBody()?['RPA_x0020_Name']",
+              "item/Fiscalyear": "@triggerBody()?['Fiscalyear']",
+              "item/Replacement": 0,
+              "item/Environmental_x0028_EHS_x0029__x": 0,
+              "item/Rationalization_x0028_Efficiency": 0,
+              "item/Capacityincrease": 0,
+              "item/Integration": 0,
+              "item/Forecast_x0020_till_x0020_PFY": 0,
+              "item/Committed_x0020_till_x0020_PFY": 0,
+              "item/Spent_x0020_till_x0020_PFY": 0,
+              "item/Title": "@variables('varCPXID')",
+              "item/Costtracking": ".",
+              "item/Company_x0020_ISO_x0020_Cod/Value": "AR",
+              "item/CPXStatus/Value": "Not started",
+              "item/Prioridad/Value": "not applicable",
+              "item/Status/Value": "Not initiated",
+              "item/Currentapprover/Claims": "@triggerBody()?['Author/Claims']",
+              "item/RPAcreatedby/Claims": "@triggerBody()?['Author/Claims']",
+              "item/nombre/Claims": "@triggerBody()?['Author/Claims']",
+              "item/Owner": [
+                {
+                  "Claims": "@concat('i:0#.f|membership|', body('Get_manager_(V2)')?['mail'])"
+                }
+              ],
+              "item/Projectcomplexity/Value": "@triggerBody()?['Projectcomplexity/Value']",
+              "item/Efficiencyimprovement": false,
+              "item/SavingFCCFY": 0,
+              "item/SavingFCNFY": 0,
+              "item/Sustainability": false,
+              "item/CO2SavingFCCFY": 0,
+              "item/CO2SavingFCNFY": 0,
+              "item/WasteSavingFCCFY": 0,
+              "item/WasteSavingFCNFY": 0,
+              "item/WatersavingFCCFY": 0,
+              "item/WaterSavingFCNFY": 0,
+              "item/EnergySavingFCCFY": 0,
+              "item/EnergySavingFCNFY": 0
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "PatchItem",
+              "connectionName": "shared_sharepointonline"
+            }
+          },
+          "description": "Se actualiza el ítem de SharePoint"
+        },
+        "set_var_-_CPX_ID": {
+          "runAfter": {
+            "set_var_-_Número_de_serie_3_dig._": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "dfb315c1-7e6b-47da-91b2-97c31040535c"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "varCPXID",
+            "value": "@concat(\r\n  triggerBody()?['Fiscalyear'],\r\n   triggerBody()?['Company_x0020_ISO_x0020_Cod']?['value'],\r\n   variables('varOA'),\r\n   variables('var3digitSerielN')\r\n)"
+          },
+          "description": "Se crea el CPX ID"
+        },
+        "in_var_-_Fiscal_year_(a_int)": {
+          "runAfter": {
+            "in_var_-_CPX_ID_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ff4c6c1a-ce2d-4916-b046-58bd6d19c30a"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varFY",
+                "type": "integer",
+                "value": "@int(triggerOutputs()?['body/Fiscalyear'])"
+              }
+            ]
+          },
+          "description": "Se crea variable del año fiscal como número"
+        },
+        "in_var_-_Organizational_Area_(vacía)": {
+          "runAfter": {
+            "in_var_-_Fiscal_year_(a_int)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "136f3cac-b681-4884-92f5-e6274325bf6f"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varOA",
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Se crea variable de Organizational Area"
+        },
+        "Asignación_de_área_segín_OA": {
+          "runAfter": {
+            "Get_items": [
+              "Succeeded"
+            ]
+          },
+          "cases": {
+            "Case 7": {
+              "case": "Concrete",
+              "actions": {
+                "Set_variable_10": {
+                  "metadata": {
+                    "operationMetadataId": "44b50c49-74dd-4415-9d2d-7fb9f55c8a1e"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "CON"
+                  }
+                }
+              }
+            },
+            "Case 8": {
+              "case": "Finance",
+              "actions": {
+                "Set_variable_11": {
+                  "metadata": {
+                    "operationMetadataId": "48697cde-0e9e-4e9e-af8d-8735979088af"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "FIN"
+                  }
+                }
+              }
+            },
+            "Case 9": {
+              "case": "Human Resources",
+              "actions": {
+                "Set_variable_12": {
+                  "metadata": {
+                    "operationMetadataId": "a2328d48-2acb-41bc-a382-92de44a3fe5d"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "HR"
+                  }
+                }
+              }
+            },
+            "Case 10": {
+              "case": "QHSE",
+              "actions": {
+                "Set_variable_13": {
+                  "metadata": {
+                    "operationMetadataId": "aa381314-831d-4441-8570-9817ed5afc05"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "HSE"
+                  }
+                }
+              }
+            },
+            "Case 11": {
+              "case": "Information Technology",
+              "actions": {
+                "Set_variable_14": {
+                  "metadata": {
+                    "operationMetadataId": "a02703d9-3824-4528-a180-e1c738051552"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "IT"
+                  }
+                }
+              }
+            },
+            "Case 12": {
+              "case": "Sales & Marketing",
+              "actions": {
+                "Set_variable_15": {
+                  "metadata": {
+                    "operationMetadataId": "0224418e-29fa-4170-b255-e0428e1a9000"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "MKT"
+                  }
+                }
+              }
+            },
+            "Case 13": {
+              "case": "Production/Maintenance",
+              "actions": {
+                "Set_variable_16": {
+                  "metadata": {
+                    "operationMetadataId": "bce8a7b9-0d07-480c-a6ce-807edaace10d"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "OP"
+                  }
+                }
+              }
+            },
+            "Case 14": {
+              "case": "Supply Chain",
+              "actions": {
+                "Set_variable_17": {
+                  "metadata": {
+                    "operationMetadataId": "c2d19549-6a18-4f00-8595-56c825a5fd82"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "OP"
+                  }
+                }
+              }
+            },
+            "Case 15": {
+              "case": "Procurement",
+              "actions": {
+                "Set_variable_18": {
+                  "metadata": {
+                    "operationMetadataId": "d2e7c05b-0954-47b5-871a-798507b30a96"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "PR"
+                  }
+                }
+              }
+            },
+            "Case 16": {
+              "case": "Industrial Ops",
+              "actions": {
+                "Set_variable_19": {
+                  "metadata": {
+                    "operationMetadataId": "78f209f4-0353-499d-922f-3ae5dd53f7a4"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "OP"
+                  }
+                }
+              }
+            },
+            "Case 17": {
+              "case": "R&D",
+              "actions": {
+                "Set_variable_20": {
+                  "metadata": {
+                    "operationMetadataId": "3649d1af-42f4-4b1a-9927-c438a462743a"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varOA",
+                    "value": "QC"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "actions": {
+              "Set_variable_21": {
+                "metadata": {
+                  "operationMetadataId": "e35a6ac9-d8d0-44aa-8158-3e9b8415cac9"
+                },
+                "type": "SetVariable",
+                "inputs": {
+                  "name": "varOA",
+                  "value": "OP"
+                }
+              }
+            }
+          },
+          "expression": "@triggerBody()?['RPA_x0020_Type']?['value']",
+          "metadata": {
+            "operationMetadataId": "935e53fa-dbf9-469b-8f17-e12ef71efa2d"
+          },
+          "type": "Switch",
+          "description": "Se asigna iniciales según OA "
+        },
+        "Do_until": {
+          "actions": {
+            "Get_items_-_Verificación_para_ver_si_ya_existe_un_CPX_con_ese_ID": {
+              "metadata": {
+                "operationMetadataId": "a4e219e4-6de3-4223-b834-ecb80db7b1c6"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5",
+                  "$filter": "Title eq '@{variables('varCPXID')}'\n"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetItems",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se obtienen cantidad de items filtrando por CPX ID#"
+            },
+            "set_var_-_T_or_F_según_si_existe": {
+              "runAfter": {
+                "Get_items_-_Verificación_para_ver_si_ya_existe_un_CPX_con_ese_ID": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "b812dae6-52ca-48e2-b048-b2ee65f60092"
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "varCPXIDExists",
+                "value": "@greater(length(body('Get_items_-_Verificación_para_ver_si_ya_existe_un_CPX_con_ese_ID')?['value']), 0)"
+              },
+              "description": "Si encuentra items con ese mismo ID, pone valor true. Si no encuentra, le pone valor false."
+            },
+            "Condition": {
+              "actions": {
+                "set_var_-_Número_de_serie_temporal": {
+                  "metadata": {
+                    "operationMetadataId": "67c39567-1a4a-488f-9be2-503dfdea9830"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varSerNTemp",
+                    "value": "@add(int(substring(variables('varCPXID'),sub(length(variables('varCPXID')), 3),3)), 1)"
+                  }
+                },
+                "set_var_-_Número_de_serie_3_dig._iteración": {
+                  "runAfter": {
+                    "set_var_-_Número_de_serie_temporal": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "7814dada-bf40-468d-80bc-913394982514"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "var3digitSerielN",
+                    "value": "@substring(concat('000', string(variables('varSerNTemp'))), sub(length(concat('000', string(variables('varSerNTemp')))), 3), 3)"
+                  }
+                },
+                "set_var_-_CPX_ID_iteración": {
+                  "runAfter": {
+                    "set_var_-_Número_de_serie_3_dig._iteración": [
+                      "Succeeded"
+                    ]
+                  },
+                  "metadata": {
+                    "operationMetadataId": "4b3e2b8e-4d82-40aa-aa20-3a30df00d141"
+                  },
+                  "type": "SetVariable",
+                  "inputs": {
+                    "name": "varCPXID",
+                    "value": "@concat(\r\n  triggerBody()?['Fiscalyear'],\r\n   triggerBody()?['Company_x0020_ISO_x0020_Cod']?['value'],\r\n   variables('varOA'),\r\n   variables('var3digitSerielN')\r\n)"
+                  }
+                }
+              },
+              "runAfter": {
+                "set_var_-_T_or_F_según_si_existe": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "equals": [
+                      "@variables('varCPXIDExists')",
+                      true
+                    ]
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d1b816d7-d0ad-4646-ab8d-f385581e9ff1"
+              },
+              "type": "If",
+              "description": "Le suma 1 en caso de que exista ese serial number"
+            }
+          },
+          "runAfter": {
+            "in_var_-_Número_de_serie_temporal": [
+              "Succeeded"
+            ]
+          },
+          "expression": "@equals(variables('varCPXIDExists'),false)",
+          "limit": {
+            "count": 50,
+            "timeout": "PT5M"
+          },
+          "metadata": {
+            "operationMetadataId": "23d3ff4b-f884-460f-8829-0ed07add67d8"
+          },
+          "type": "Until"
+        },
+        "Existe_=_TRUE": {
+          "runAfter": {
+            "set_var_-_CPX_ID": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "50c10b1d-6edd-4ba9-a029-3d34877ea0fa"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varCPXIDExists",
+                "type": "boolean",
+                "value": true
+              }
+            ]
+          }
+        },
+        "in_var_-_Número_de_serie_temporal": {
+          "runAfter": {
+            "Existe_=_TRUE": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "cff1658c-510b-4b89-9840-3580855385ae"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varSerNTemp",
+                "type": "integer"
+              }
+            ]
+          },
+          "description": "Se crea por si el N de serie está repetido"
+        },
+        "SharePoint_HTTP_-_Miembros_de_grupo_de_ingeniería": {
+          "runAfter": {
+            "Update_item": [
+              "Failed"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "960a789c-0d8a-4876-bae0-e44b1329dc08"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "parameters/method": "GET",
+              "parameters/uri": "/_api/web/sitegroups/getByName('AR OPS Engineering')/users?$select=Email,UserPrincipalName",
+              "parameters/headers": {
+                "Accept": "application/json;odata=nometadata"
+              }
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "HttpRequest",
+              "connectionName": "shared_sharepointonline"
+            }
+          },
+          "description": "Buscamos los miembros del grupo"
+        },
+        "in_var_-_Correos_de_ingeniería": {
+          "runAfter": {
+            "SharePoint_HTTP_-_Miembros_de_grupo_de_ingeniería": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e19f966f-16c2-494f-a6f6-f27bcd3b2356"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "engEmails",
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "Apply_to_each_2": {
+          "foreach": "@body('SharePoint_HTTP_-_Miembros_de_grupo_de_ingeniería')?['value']",
+          "actions": {
+            "append_to_array_var_-_Traer_valor_no_vacío": {
+              "metadata": {
+                "operationMetadataId": "2aefad4b-1e7d-4152-8d6c-854aaad094cc"
+              },
+              "type": "AppendToArrayVariable",
+              "inputs": {
+                "name": "engEmails",
+                "value": "@coalesce(item()?['Email'], item()?['UserPrincipalName'])"
+              }
+            }
+          },
+          "runAfter": {
+            "in_var_-_Correos_de_ingeniería": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1115510c-6328-4e7a-a706-1e20a089069a"
+          },
+          "type": "Foreach"
+        },
+        "Compose_-_Join_de_correos": {
+          "runAfter": {
+            "Apply_to_each_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0c07ed76-4f54-4721-af9e-57c64c2a0107"
+          },
+          "type": "Compose",
+          "inputs": "@join(variables('engEmails'), ';')",
+          "description": "Se juntan con \";\" de por medio para poder ponerlo como CC del correo."
+        },
+        "For_each": {
+          "foreach": "@outputs('Get_items_-_Verificación_para_ver_si_ya_existe_un_CPX_con_ese_ID')?['body/value']",
+          "actions": {
+            "Send_an_email_-_Correo_de_aviso_de_run_fallido": {
+              "metadata": {
+                "operationMetadataId": "70a24016-27c6-46d8-a17f-e1bff0511e6f"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@triggerBody()?['Author/Email']",
+                  "emailMessage/Subject": "Error - @{variables('varCPXID')} could not be created",
+                  "emailMessage/Body": "<p class=\"editor-paragraph\">El siguiente proyecto<b><strong class=\"editor-text-bold\"> </strong></b>no pudo ser creado en la lista de SharePoint.</p><br><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Type</span></u>: @{triggerBody()?['Type/Value']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">CPX Name</span></u>: @{triggerBody()?['RPA_x0020_Name']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Site</span></u>: @{triggerBody()?['Site/Value']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Fiscal Year</span></u>:@{triggerBody()?['Fiscalyear']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Organizational Area</span></u>: @{triggerBody()?['RPA_x0020_Type/Value']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Creado por</span></u>: @{triggerBody()?['Author/DisplayName']}</p><br><p class=\"editor-paragraph\">Por favor, póngase en contacto con las personas copiadas.</p><br><p class=\"editor-paragraph\">Saludos,</p>",
+                  "emailMessage/Cc": "@outputs('Compose_-_Join_de_correos')",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "operationId": "SendEmailV2",
+                  "connectionName": "shared_office365"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Compose_-_Join_de_correos": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "dea2b626-d3a8-4e81-8de1-dd9d16328fce"
+          },
+          "type": "Foreach"
+        },
+        "Run_a_Child_Flow": {
+          "runAfter": {
+            "Update_item": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b51480da-e810-40e7-a162-e0274e279d2a"
+          },
+          "type": "Workflow",
+          "inputs": {
+            "host": {
+              "workflowReferenceName": "292b8380-6dc1-f011-bbd2-6045bd9f321d"
+            },
+            "body": {
+              "text": "@triggerBody()?['Company_x0020_ISO_x0020_Cod/Value']",
+              "text_1": "@triggerBody()?['Site/Value']",
+              "text_2": "@string(triggerOutputs()?['body/Fiscalyear'])",
+              "text_3": "@outputs('Update_item')?['body/Title']",
+              "text_4": "@triggerBody()?['RPA_x0020_Name']",
+              "text_5": "@triggerBody()?['Author/Email']",
+              "text_6": "@triggerBody()?['Author/DisplayName']",
+              "text_7": "@triggerBody()?['Projectcomplexity/Value']",
+              "text_11": "@triggerBody()?['{Link}']"
+            }
+          }
+        },
+        "Get_manager_(V2)": {
+          "runAfter": {
+            "Do_until": [
+              "Succeeded"
+            ]
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "id": "@triggerBody()?['Author/Email']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+              "operationId": "Manager_V2",
+              "connectionName": "shared_office365users"
+            }
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

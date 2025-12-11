@@ -1,0 +1,1750 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_powerbi": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedpowerbi_0113c"
+        },
+        "api": {
+          "name": "shared_powerbi"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_c20d8"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_sharepointonline-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedsharepointonline_aaf43"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedoffice365_ef65f"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_teams": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedteams_69b81"
+        },
+        "api": {
+          "name": "shared_teams"
+        }
+      },
+      "shared_sharepointonline-2": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ms_sharedsharepointonline_564d3"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedoffice365_ccf66"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "a9f2410e-da46-49ff-9afd-ab3141be5f54"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Company ISO Cod",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "Site",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "title": "Fiscal Year",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_3": {
+                  "title": "CPX_ID",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_4": {
+                  "title": "CPX Name",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_5": {
+                  "title": "Author Email",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_6": {
+                  "title": "Author Display Name",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_7": {
+                  "title": "Project Complexity",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_11": {
+                  "title": "Link al elemento",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3",
+                "text_4",
+                "text_5",
+                "text_6",
+                "text_7",
+                "text_11"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Refresh_Dataset": {
+          "actions": {
+            "Refresh_a_dataset_-_CapEx_list_dataset_2.0": {
+              "metadata": {
+                "operationMetadataId": "c389a3d7-9409-40f1-a453-cc5dc3ed9743"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "groupid": "a85a3586-a19e-49cb-9c06-480bf99c686e",
+                  "datasetid": "aa8709e7-991c-4b67-9b59-baf08d1f879d"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_powerbi",
+                  "operationId": "RefreshDataset",
+                  "connectionName": "shared_powerbi"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6c8724e7-b494-4f4f-8cc6-45895a9160de"
+          },
+          "type": "Scope"
+        },
+        "Salva-error_del_scope": {
+          "runAfter": {
+            "Refresh_Dataset": [
+              "Succeeded",
+              "TimedOut",
+              "Skipped",
+              "Failed"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "545922a1-006d-4804-90d0-235ab983bd28"
+          },
+          "type": "Compose",
+          "inputs": "Refresh done",
+          "description": "Si el dataset ya se estaba actualizando, no se actualiza de nuevo y con este paso el flujo no falla."
+        },
+        "Respond_to_a_Power_App_or_flow_5": {
+          "runAfter": {
+            "Salva-error_del_scope": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "1b229535-4d09-499d-ab11-a5fc057d632e"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "title": "Status",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              },
+              "additionalProperties": {}
+            },
+            "statusCode": 200,
+            "body": {
+              "status": "OK"
+            }
+          }
+        },
+        "in_var_-_Indicador_de_Error": {
+          "runAfter": {},
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varError",
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "Creación_de_carpetas": {
+          "actions": {
+            "Create_new_folder_-_Carpeta_azul": {
+              "metadata": {
+                "operationMetadataId": "3e8d2e63-5a1c-48f9-bf3e-2ef0f1f2d2b5"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "table": "@{triggerBody()['text']}_@{triggerBody()['text_1']}",
+                  "parameters/path": "/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CreateNewFolder",
+                  "connectionName": "shared_sharepointonline"
+                }
+              }
+            },
+            "Send_an_HTTP_request_to_SharePoint_-_Obtención_de_Template": {
+              "runAfter": {
+                "Create_new_folder_-_Carpeta_azul": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "47a3b60b-2300-46ad-84f6-40b03cb0d2cd"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "GET",
+                  "parameters/uri": "/_api/web/GetFolderByServerRelativePath(decodedurl='/sites/msTeams-4053-796_Internal-Internal/Shared Documents/Templates/ALLOPS/CPX/Issued/Latest')/Folders?$select=Name,ServerRelativeUrl",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata"
+                  }
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se obtienen los Path de todas las carpetas dentro de Templates."
+            },
+            "Apply_to_each": {
+              "foreach": "@body('Send_an_HTTP_request_to_SharePoint_-_Obtención_de_Template')?['value']",
+              "actions": {
+                "Append_to_array_variable_-_Dirección_del_server_de_cada_carpeta": {
+                  "metadata": {
+                    "operationMetadataId": "f507a139-9f21-4d74-a7bc-5bbde4d1d231"
+                  },
+                  "type": "AppendToArrayVariable",
+                  "inputs": {
+                    "name": "exportUri",
+                    "value": "@concat('https://sikacloud.sharepoint.com', item()?['ServerRelativeUrl'])"
+                  }
+                }
+              },
+              "runAfter": {
+                "Send_an_HTTP_request_to_SharePoint_-_Obtención_de_Template": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "67ffe0ac-543e-4731-875d-9b9214ff7e8f"
+              },
+              "type": "Foreach"
+            },
+            "For_each_1": {
+              "foreach": "@variables('exportUri')",
+              "actions": {
+                "Send_an_HTTP_request_to_SharePoint_-_POST_de_cada_carpeta": {
+                  "metadata": {
+                    "operationMetadataId": "70c69b1e-d21d-4101-ac5b-2436f06ef921"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                      "parameters/method": "POST",
+                      "parameters/uri": "/_api/site/CreateCopyJobs?copy=true",
+                      "parameters/headers": {
+                        "Accept": "application/json;odata=nometadata",
+                        "Content-Type": "application/json;odata=nometadata"
+                      },
+                      "parameters/body": "{\n  \"exportObjectUris\": @{variables('exportUri')},\n  \"destinationUri\":\"@{concat(\r\n    'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n    concat(triggerBody()?['text'],'_',triggerBody()?['text_1']),\r\n    '/',\r\n    string(triggerBody()?['text_2']),\r\n    '/',\r\n    triggerBody()?['text_3'],'_',\r\n    triggerBody()?['text_1'],'_',\r\n    replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’')\r\n  )}\",\n  \"options\": {\n    \"AllowSchemaMismatch\": true,\n    \"IgnoreVersionHistory\": true,\n    \"IsMoveMode\": false\n  }\n}"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                      "operationId": "HttpRequest",
+                      "connectionName": "shared_sharepointonline"
+                    }
+                  },
+                  "description": "Se \"publican\" las carpetas que se obtuvo antes (con el GET) con la API CreateCopyJobs.\nCon esto se crea cada una de las carpetas dentro de la carpeta azul del proyecto nuevo creado."
+                }
+              },
+              "runAfter": {
+                "Apply_to_each": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "91612aba-9a89-46a6-b1cc-879db6d81e77"
+              },
+              "type": "Foreach"
+            }
+          },
+          "runAfter": {
+            "in_var_-_export_uri_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Creación_de_carpeta_compartida": {
+          "actions": {
+            "Create_new_folder_-_Carpeta_compartida_en_External": {
+              "metadata": {
+                "operationMetadataId": "7b55d66e-b525-49b6-9331-6ac04725fb21"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal",
+                  "table": "@{triggerBody()?['text']}_@{triggerBody()?['text_1']}",
+                  "parameters/path": "/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CreateNewFolder",
+                  "connectionName": "shared_sharepointonline-1"
+                }
+              },
+              "description": "Dentro de ALL OPS EXTERNAL, en la librería de la planta correspondiente, se crea una carpeta especifica con el nombre del proyecto (CPX Name). Estos datos se toman del nuevo ítem que se detectó en el paso anterior."
+            },
+            "Get_Template": {
+              "runAfter": {
+                "Create_new_folder_-_Carpeta_compartida_en_External": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "3545d5aa-4557-408f-a942-c968ecfca6d8"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal",
+                  "id": "/Shared Documents/Templates/ALLOPS (external)/CPX/Issued/Latest/15.Comunication (InternalExt.)"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFolderMetadata",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se toman todos los metadatos de la estructura de carpetas que se usa como Template para cada proyecto, ubicada en una ruta especifica y parte de la librería de templates del sitio Sharepoint ALLOPS EXTERNAL."
+            },
+            "Copy_Template": {
+              "runAfter": {
+                "Get_Template": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "98df844f-19d8-4c50-80e8-7ace26f01fed"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal",
+                  "parameters/sourceFolderId": "@outputs('Get_Template')?['body/Id']",
+                  "parameters/destinationDataset": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal",
+                  "parameters/destinationFolderPath": "/@{triggerBody()?['text']}_@{triggerBody()?['text_1']}/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}",
+                  "parameters/nameConflictBehavior": 1
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CopyFolderAsync",
+                  "connectionName": "shared_sharepointonline"
+                }
+              }
+            },
+            "Creación_carpeta_compartida_en_External": {
+              "runAfter": {
+                "Copy_Template": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8c10ea59-75d9-4b08-b267-967c19d418e4"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal",
+                  "folderPath": "/@{triggerBody()?['text']}_@{triggerBody()?['text_1']}/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}/15.Comunication (InternalExt.)",
+                  "name": "Access to project folder.url",
+                  "body": "[InternetShortcut]\nURL=@{variables('ALLOPSUrl')}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CreateFile",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "runtimeConfiguration": {
+                "contentTransfer": {
+                  "transferMode": "Chunked"
+                }
+              }
+            },
+            "Creación_carpeta_compartida_en_ALLOPS": {
+              "runAfter": {
+                "Copy_Template": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "b2df986b-07ce-4486-821e-d945890b5478"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "folderPath": "@{triggerBody()?['text']}_@{triggerBody()?['text_1']}/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}/15.Comunication (InternalExt.)",
+                  "name": "Access to shared folder.url",
+                  "body": "[InternetShortcut]\nURL= @{variables('Externalurl')}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CreateFile",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "runtimeConfiguration": {
+                "contentTransfer": {
+                  "transferMode": "Chunked"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "in_var_-_Enlace_de_ALLOPS_ext": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Correo_de_bienvenida": {
+          "actions": {
+            "SharepPoint_HTTP_-_miembros_de_ing": {
+              "metadata": {
+                "operationMetadataId": "632d9b9e-d1e4-4cc4-8099-005cf45b8c5b"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "GET",
+                  "parameters/uri": "/_api/web/sitegroups/getByName('@{triggerBody()?['text']} OPS Engineering')/users?$select=Email,UserPrincipalName",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata"
+                  }
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Buscamos los miembros del grupo"
+            },
+            "Apply_to_each_2": {
+              "foreach": "@body('SharepPoint_HTTP_-_miembros_de_ing')?['value']",
+              "actions": {
+                "Append_to_array_variable_-_correos_de_miembros_de_ing": {
+                  "metadata": {
+                    "operationMetadataId": "7fecb799-ccae-4a26-b851-8417b46c21ab"
+                  },
+                  "type": "AppendToArrayVariable",
+                  "inputs": {
+                    "name": "grpEmails",
+                    "value": "@coalesce(item()?['Email'], item()?['UserPrincipalName'])"
+                  }
+                }
+              },
+              "runAfter": {
+                "SharepPoint_HTTP_-_miembros_de_ing": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ef82e10e-762d-451a-9243-094527d5a47c"
+              },
+              "type": "Foreach"
+            },
+            "Get_file_-_Foto_ALLOPS": {
+              "runAfter": {
+                "Apply_to_each_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "507e36c9-5d2d-4b38-928f-3943c837da44"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "path": "/Shared Documents/Images/All Ops/ALL OPS.jpg",
+                  "inferContentType": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFileContentByPath",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se obtiene la imagen de firma."
+            },
+            "Compose_-_Foto_ALLOPS": {
+              "runAfter": {
+                "Get_file_-_Foto_ALLOPS": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "736b23bd-cbcf-4863-8c22-25dcaafe388e"
+              },
+              "type": "Compose",
+              "inputs": "@concat(\r\n  '<img src=\"',\r\n  dataUri(body('Get_file_-_Foto_ALLOPS')),\r\n  '\" alt=\"ALL OPS\" width=\"500\" />'\r\n)",
+              "description": "Se ejecuta un compose para añadir la imagen de firma al correo."
+            },
+            "Compose_-_correos_ing": {
+              "runAfter": {
+                "Compose_-_Foto_ALLOPS": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d2117875-c4d1-4291-bd32-006e925115ec"
+              },
+              "type": "Compose",
+              "inputs": "@join(variables('grpEmails'), ';')",
+              "description": "Se juntan con \";\" de por medio para poder ponerlo como CC del correo."
+            },
+            "Send_an_email_(V2)_-_Correo_de_bienvenida": {
+              "runAfter": {
+                "Compose_-_correos_ing": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "490a9c74-2e05-4e6d-b028-686ebc8c2f84"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@triggerBody()?['text_5']",
+                  "emailMessage/Subject": "@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}",
+                  "emailMessage/Body": "<p class=\"editor-paragraph\">¡Hola @{first(split(triggerBody()?['text_6'], ' '))}!</p><p class=\"editor-paragraph\">¡Felicitaciones! has creado un nuevo proyecto en <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal\" class=\"editor-link\">ALLOPS</a>. Puedes consultar más detalles aqui:</p><p class=\"editor-paragraph\">@{variables('cfg')['varLink']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Consejos útiles</span></u>:</p><p class=\"editor-paragraph\">• Inicia el proyecto completando el formulario RPA (Request for project approval) para la solicitud de fondos. <a href=\"https://sikacloud.sharepoint.com/:f:/r/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/General/Instructivos%20del%20sitio/Creaci%C3%B3n%20de%20RPAs?csf=1&amp;web=1&amp;e=dwB81P\" class=\"editor-link\">Aqui</a> tienes un breve instructivo para hacerlo (abre la carpeta correspondiente a tu país).<br>• ALL OPS te permite crear @{variables('cfg')['ganttlink']} el diagrama de Gantt básico del proyecto aun sin tener una licencia de MS Project. También puedes compartirlo con otro miembro de Sika si lo deseas.<br>• Si ya posees una licencia de MS Project puedes obtener resultados profesionales sincronizando el diagrama de Gantt anterior con @{variables('cfg')['mpplink']} que hemos creado en base a la complejidad del proyecto que nos has indicado (@{triggerBody()?['text_7']}). Encontrarás el instructivo <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FSincronizaci%C3%B3n%20MS%20Project%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">aquí</a>.<br>• Recuerda que para este proyecto puedes seguir @{variables('cfg')['ctlink']} el detalle de costos pronosticados, comprometidos y gastados. Si eres parte del equipo de ingeniería en tu país <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FActualizaci%C3%B3n%20Cost%20Tracking%20file%20desde%20SAP%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">este instructivo</a> te explicará paso a paso como actualizar desde SAP todas las partidas, caso contrario no te preocupes, serán actualizadas regularmente por ellos.<br>• En todo momento puedes consultar @{variables('cfg')['dblink']} el tablero general de proyecto con los principales indicadores financieros y la curva S (aguarda unos minutos para utilzar este enlace).<br>• En @{variables('cfg')['shrd_fold_link']} puedes intercambiar documentos con proveedores externos a la compañía. <a href=\"https://sikacloud.sharepoint.com/:f:/r/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/General/Instructivos%20del%20sitio/Compartir%20archivos%20con%20externos/01-Issued/Latest?csf=1&amp;web=1&amp;e=qibIqK\" class=\"editor-link\">Aquí</a> tienes un instructivo sobre cómo hacerlo.<br>• En la @{variables('cfg')['bluefld_link']} encontrarás la estructura estándar de proyecto para que utilices a tu conveniencia almacenando la información en la nube de ALLOPS. Te recomendamos que actives la sincronización de la carpeta azul con tu explorador de archivos para que puedas accederla como cualquier carpeta en tu PC sin tener que usar Microsoft Edge (Encontrará el instructivo <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FSincronizaci%C3%B3n%20con%20explorador%20de%20archivos%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">aquí</a>).<br>• Recuerda que puedes encontrar en el <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/SitePages/Maintenance.aspx\" class=\"editor-link\">MarketPlace Interno</a> de ALLOPS algunos bienes que no usamos y podrían servir para tu proyecto, lo cual reduce el impacto financiero por impairments y el costo general del proyecto.<br>• En caso de dudas o incovenientes con ALLOPS puedes comunicarte con tu equipo de ingeniería, que está copiado en este correo.<br>• Junto con este correo vas a recibir una notificación de Teams para ingresar al canal de tu proyecto, creado dentro del equipo de MS Teams <a href=\"https://teams.microsoft.com/l/team/19%3ARZkKBDxxYROJks7d1B5bE3wjJIM7GKMecNi_FaV1hVs1%40thread.tacv2/conversations?groupId=d4e4453c-578a-4e64-a4cc-eddfd3946b66&amp;tenantId=eb8a6a88-d993-4e50-b4f0-ada3df9e78f8\" class=\"editor-link\">ALLOPS</a> y con el cual podrás hablar directamente con tu equipo de ingeniería.</p><br><p class=\"editor-paragraph\">Saludos!,</p><br><p class=\"editor-paragraph\">@{outputs('Compose_-_Foto_ALLOPS')}</p><br>",
+                  "emailMessage/Cc": "@outputs('Compose_-_correos_ing')",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "operationId": "SendEmailV2",
+                  "connectionName": "shared_office365"
+                }
+              },
+              "description": "Se le avisa a la persona que su proyecto fue creado y le proporciona un link al mismo."
+            }
+          },
+          "runAfter": {
+            "in_var_-_correos_de_grupo_de_ingeniería": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Creación_del_Diagrama_de_Gantt": {
+          "actions": {
+            "SharePoint_HTTP_-_Verifica_si_existe_Gantt": {
+              "metadata": {
+                "operationMetadataId": "e099b511-8339-4ad0-afa7-9dfbf95a8b39"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt",
+                  "parameters/method": "GET",
+                  "parameters/uri": "/_api/web/lists/getbytitle('@{encodeUriComponent(triggerBody()?['text_3'])}')",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata"
+                  }
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "¡OJO! Este paso está hecho para fallar, no falla solo si existe, y si existe no lo crea porque pisaría uno archivo existente (por eso está en scope)."
+            },
+            "Send_an_email_(V2)_-_Correo_de_falla_de_creación_de_Gantt": {
+              "runAfter": {
+                "SharePoint_HTTP_-_Verifica_si_existe_Gantt": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "93fd3708-fc35-43b0-831c-04910f8fadc7"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@triggerBody()?['text_5']",
+                  "emailMessage/Subject": "Error - Diagrama de Gantt ",
+                  "emailMessage/Body": "<p class=\"editor-paragraph\">El Diagrama de Gantt para su proyecto @{triggerBody()?['text_4']} no pudo ser creado porque ya existe otro con ese nombre. Por favor ponganse en contacto con su equipo de ingeniería.</p><br><p class=\"editor-paragraph\">Saludos,</p>",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "operationId": "SendEmailV2",
+                  "connectionName": "shared_office365"
+                }
+              }
+            },
+            "SharePoint_HTTP_-_Creación_de_lista_de_tareas": {
+              "runAfter": {
+                "SharePoint_HTTP_-_Verifica_si_existe_Gantt": [
+                  "Failed",
+                  "Skipped"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8159d202-d707-4423-a623-534aff3ec620"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt",
+                  "parameters/method": "POST",
+                  "parameters/uri": "/_api/web/lists",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata",
+                    "Content-Type": "application/json;odata=nometadata"
+                  },
+                  "parameters/body": "{\n\"Title\": \"@{triggerBody()?['text_3']}\",\n\"BaseTemplate\": 171,\n\"Description\": \"Lista de tareas (Project Tasks) para @{triggerBody()?['text_3']}\",\n\"AllowContentTypes\": true,\n\"ContentTypesEnabled\": true\n}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se crea la lista de tareas usando BaseTemplate: 171. (Es la plantilla que incluye campos de Project y vista Gantt, necesarios para poder sincronizar el .MPP con la lista.\nCon URI como que voy a la direc. exacta que quiero (endpoint de crear listas)"
+            },
+            "Sharepoint_HTTP_-_Vista_de_Gantt_": {
+              "runAfter": {
+                "SharePoint_HTTP_-_Creación_de_lista_de_tareas": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "b71da53a-82f9-406e-ba0a-54b1b0b45051"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt",
+                  "parameters/method": "POST",
+                  "parameters/uri": "/_api/web/lists/getbytitle('@{encodeUriComponent(triggerBody()?['text_3'])}')/views/getbytitle('Diagrama de Gantt')",
+                  "parameters/headers": {
+                    "IF-MATCH": "*",
+                    "X-HTTP-Method": "MERGE",
+                    "Content-Type": "application/json;odata=nometadata"
+                  },
+                  "parameters/body": "{ \"DefaultView\": true }"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se fuerza la visualización de Diagrama de Gantt."
+            },
+            "Switch": {
+              "runAfter": {
+                "Sharepoint_HTTP_-_Vista_de_Gantt_": [
+                  "Succeeded"
+                ]
+              },
+              "cases": {
+                "Case": {
+                  "case": "High",
+                  "actions": {
+                    "Set_variable": {
+                      "metadata": {
+                        "operationMetadataId": "70f0b6be-054f-4fcf-b266-1e9d6ec86aaa"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - High complexity project V1.mpp"
+                      }
+                    }
+                  }
+                },
+                "Case 2": {
+                  "case": "Medium",
+                  "actions": {
+                    "Set_variable_1": {
+                      "metadata": {
+                        "operationMetadataId": "c5be9ebb-9656-41c4-8d2d-1e5e4bb531c0"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - Medium complexity project V1.mpp"
+                      }
+                    }
+                  }
+                },
+                "Case 3": {
+                  "case": "Low",
+                  "actions": {
+                    "Set_variable_2": {
+                      "metadata": {
+                        "operationMetadataId": "69cac647-5c29-4083-8fec-a786d60080da"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - Low complexity project V1.mpp"
+                      }
+                    }
+                  }
+                },
+                "Case 4": {
+                  "case": "Lump",
+                  "actions": {
+                    "Set_variable_3": {
+                      "metadata": {
+                        "operationMetadataId": "387ea4e7-871a-4ce7-98c5-2f57bffb58dd"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - Lump Project V1.mpp"
+                      }
+                    }
+                  }
+                },
+                "Case 5": {
+                  "case": "New site",
+                  "actions": {
+                    "Set_variable_4": {
+                      "metadata": {
+                        "operationMetadataId": "e6a8ab78-3b8d-495e-9314-7641ad74995c"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - New site project V1.mpp"
+                      }
+                    }
+                  }
+                },
+                "Case 6": {
+                  "case": "All (CPX Closure)",
+                  "actions": {
+                    "Set_variable_5": {
+                      "metadata": {
+                        "operationMetadataId": "d857688c-4b0c-439b-8b3d-9d92ce28dcbe"
+                      },
+                      "type": "SetVariable",
+                      "inputs": {
+                        "name": "filename",
+                        "value": "Gantt template - Project under closure V1.mpp"
+                      }
+                    }
+                  }
+                }
+              },
+              "default": {
+                "actions": {
+                  "Set_variable_6": {
+                    "metadata": {
+                      "operationMetadataId": "ee8ecce4-bdf4-49b8-8a68-38d85101e045"
+                    },
+                    "type": "SetVariable",
+                    "inputs": {
+                      "name": "filename",
+                      "value": "Gantt template - High complexity project V1.mpp"
+                    }
+                  }
+                }
+              },
+              "expression": "@triggerBody()?['text_7']",
+              "metadata": {
+                "operationMetadataId": "7304543f-5fb0-4353-974c-0651832a1714"
+              },
+              "type": "Switch",
+              "description": "Según la complejidad del proyecto se define el nombre del archivo a crear."
+            },
+            "Get_file_-_Template": {
+              "runAfter": {
+                "Switch": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "caf4cd99-4c20-4095-addc-05bef2ccbdd5"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "path": "/Shared Documents/Templates/ALLOPS/Gantt/Issued/Latest/@{variables('filename')}",
+                  "inferContentType": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFileContentByPath",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se obtiene el contenido del archivo que se elige antes segun complejidad para crearlo."
+            },
+            "Create_file_-_MS_Project": {
+              "runAfter": {
+                "Get_file_-_Template": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "716ee567-22ea-4116-aabf-b97fed08a492"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt",
+                  "folderPath": "/SiteAssets",
+                  "name": "@concat(triggerBody()?['text'], '_Gantt-', triggerBody()?['text_3'], '.mpp')",
+                  "body": "@body('Get_file_-_Template')"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "CreateFile",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Se crea el archivo .mpp.",
+              "runtimeConfiguration": {
+                "contentTransfer": {
+                  "transferMode": "Chunked"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "in_var_-_filename": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Crecaión_de_canal_de_Teams": {
+          "actions": {
+            "Graph_HTTP_-_Creación_del_canal": {
+              "metadata": {
+                "operationMetadataId": "d8c42e08-2f58-4172-9b04-0749010e2645"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "Uri": "https://graph.microsoft.com/v1.0/teams/d4e4453c-578a-4e64-a4cc-eddfd3946b66/channels",
+                  "Method": "POST",
+                  "CustomHeader1": "Content-Type: application/json",
+                  "Body": "{\n  \"displayName\": \"@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}\",\n  \"description\": \"Canal del proyecto @{triggerBody()?['text_4']}\",\n  \"membershipType\": \"shared\",\n  \"members\": [\n    {\n      \"@odata.type\": \"#microsoft.graph.aadUserConversationMember\",\n      \"roles\": [\n        \"owner\"\n      ],\n      \"user@odata.bind\": \"https://graph.microsoft.com/v1.0/users('@{variables('srvacc')}')\"\n    }\n  ]\n}",
+                  "ContentType": "application/json"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_teams"
+                }
+              }
+            },
+            "Delay": {
+              "runAfter": {
+                "Graph_HTTP_-_Creación_del_canal": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "4a9e880d-1672-4c86-989b-19ea82dea3ec"
+              },
+              "type": "Wait",
+              "inputs": {
+                "interval": {
+                  "count": 10,
+                  "unit": "Second"
+                }
+              }
+            },
+            "SharePoint_HTTP_-_Obtención_de_owners": {
+              "runAfter": {
+                "Delay": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "632d9b9e-d1e4-4cc4-8099-005cf45b8c5b"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "GET",
+                  "parameters/uri": "/_api/web/sitegroups/getByName('ALL OPS Owners')/users?$select=Email,UserPrincipalName",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata"
+                  }
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Buscamos los miembros del grupo"
+            },
+            "Apply_to_each_2_1": {
+              "foreach": "@body('SharePoint_HTTP_-_Obtención_de_owners')?['value']",
+              "actions": {
+                "Append_to_array_variable_-_correos_de_owners": {
+                  "metadata": {
+                    "operationMetadataId": "7fecb799-ccae-4a26-b851-8417b46c21ab"
+                  },
+                  "type": "AppendToArrayVariable",
+                  "inputs": {
+                    "name": "ownEmails",
+                    "value": "@coalesce(item()?['Email'], item()?['UserPrincipalName'])"
+                  }
+                }
+              },
+              "runAfter": {
+                "SharePoint_HTTP_-_Obtención_de_owners": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Foreach"
+            },
+            "Compose_-_join_de_correos_de_owners": {
+              "runAfter": {
+                "Apply_to_each_2_1": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d2117875-c4d1-4291-bd32-006e925115ec"
+              },
+              "type": "Compose",
+              "inputs": "@join(variables('ownEmails'), ';')",
+              "description": "Se juntan con \";\" de por medio para poder ponerlo como CC del correo."
+            },
+            "List_channels": {
+              "runAfter": {
+                "Compose_-_join_de_correos_de_owners": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "478eb3f8-10c5-4b9a-abba-bdb00cb32d18"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "groupId": "d4e4453c-578a-4e64-a4cc-eddfd3946b66"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                  "operationId": "GetChannelsForGroup",
+                  "connectionName": "shared_teams"
+                }
+              }
+            },
+            "Filter_array_-_Busqueda_de_channel_id": {
+              "runAfter": {
+                "List_channels": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "ccff6387-a253-4d12-83d3-be91771c6816"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@outputs('List_channels')?['body/value']",
+                "where": "@equals(item()?['displayName'],outputs('Compose_-_Formato_de_nombre'))"
+              }
+            },
+            "Graph_HTTP_-_Añade_propietario": {
+              "runAfter": {
+                "set_var_-_channel_id": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a55f8cc3-9465-4869-a596-5dd09e53a884"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "Uri": "https://graph.microsoft.com/v1.0/teams/d4e4453c-578a-4e64-a4cc-eddfd3946b66/channels/@{variables('channelid')}/members",
+                  "Method": "POST",
+                  "CustomHeader1": "ContentType: application/json",
+                  "Body": "{\n  \"@odata.type\": \"#microsoft.graph.aadUserConversationMember\",\n  \"roles\": [\n    \"owner\"\n  ],\n  \"user@odata.bind\": \"https://graph.microsoft.com/v1.0/users('@{triggerBody()?['text_5']}')\"\n}",
+                  "ContentType": "application/json"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_teams"
+                }
+              }
+            },
+            "SharePoint_HTTP_-_Obtención_miembros_de_ingeniería": {
+              "runAfter": {
+                "Graph_HTTP_-_Añade_propietario": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "632d9b9e-d1e4-4cc4-8099-005cf45b8c5b"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "GET",
+                  "parameters/uri": "/_api/web/sitegroups/getByName('@{triggerBody()?['text']} OPS Engineering')/users?$select=Email,UserPrincipalName",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata"
+                  }
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "description": "Buscamos los miembros del grupo"
+            },
+            "Apply_to_each_2_1_1": {
+              "foreach": "@body('SharePoint_HTTP_-_Obtención_miembros_de_ingeniería')?['value']",
+              "actions": {
+                "Append_to_array_variable_-_correos_de_ingeniería": {
+                  "metadata": {
+                    "operationMetadataId": "7fecb799-ccae-4a26-b851-8417b46c21ab"
+                  },
+                  "type": "AppendToArrayVariable",
+                  "inputs": {
+                    "name": "engEmails",
+                    "value": "@coalesce(item()?['Email'], item()?['UserPrincipalName'])"
+                  }
+                }
+              },
+              "runAfter": {
+                "SharePoint_HTTP_-_Obtención_miembros_de_ingeniería": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Foreach"
+            },
+            "Compose_-_join_de_correos_de_ingeniería": {
+              "runAfter": {
+                "Apply_to_each_2_1_1": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "d2117875-c4d1-4291-bd32-006e925115ec"
+              },
+              "type": "Compose",
+              "inputs": "@join(variables('engEmails'), ';')",
+              "description": "Se juntan con \";\" de por medio para poder ponerlo como CC del correo."
+            },
+            "Compose_-_Longitud_de_la_lista_de_canales": {
+              "runAfter": {
+                "List_channels": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "4b0f4cf9-f548-4d16-91d7-1e1891b4108b"
+              },
+              "type": "Compose",
+              "inputs": "@length(body('List_channels')?['value'])"
+            },
+            "Condition": {
+              "actions": {
+                "Send_an_email_(V2)_2": {
+                  "metadata": {
+                    "operationMetadataId": "df327cb7-ed1f-4c21-a11d-590efdfcdf09"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "emailMessage/To": "@outputs('Compose_-_join_de_correos_de_owners')",
+                      "emailMessage/Subject": "ALLOPS – Límite de canales alcanzado",
+                      "emailMessage/Body": "<p class=\"editor-paragraph\">Se ha alcanzado el número de 800 canales en el team de ALLOPS.<br>Revisa la configuración y considera archivar o borrar canales sin uso para evitar llegar al límite absoluto de 1000 canales. Esta acción no elimina la información del proyecto asociado al canal que se borre, solamente se eliminarán las conversaciones.<br><br>Cantidad detectada: @{outputs('Compose_-_Longitud_de_la_lista_de_canales')}</p>",
+                      "emailMessage/Importance": "Normal"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                      "operationId": "SendEmailV2",
+                      "connectionName": "shared_office365"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Compose_-_Longitud_de_la_lista_de_canales": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {}
+              },
+              "expression": {
+                "and": [
+                  {
+                    "greater": [
+                      "@outputs('Compose_-_Longitud_de_la_lista_de_canales')",
+                      800
+                    ]
+                  }
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "8065c292-e2aa-4bc0-9a14-dc6d6126f546"
+              },
+              "type": "If"
+            },
+            "set_var_-_channel_id": {
+              "runAfter": {
+                "Filter_array_-_Busqueda_de_channel_id": [
+                  "Succeeded"
+                ]
+              },
+              "type": "SetVariable",
+              "inputs": {
+                "name": "channelid",
+                "value": "@first(body('Filter_array_-_Busqueda_de_channel_id'))?['id']"
+              }
+            },
+            "Apply_to_each_1": {
+              "foreach": "@body('SharePoint_HTTP_-_Obtención_miembros_de_ingeniería')?['value']",
+              "actions": {
+                "Graph_HTTP_-_Añade_miembros_de_ingeniería_": {
+                  "metadata": {
+                    "operationMetadataId": "a55f8cc3-9465-4869-a596-5dd09e53a884"
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "Uri": "https://graph.microsoft.com/v1.0/teams/d4e4453c-578a-4e64-a4cc-eddfd3946b66/channels/@{variables('channelid')}/members",
+                      "Method": "POST",
+                      "CustomHeader1": "ContentType: application/json",
+                      "Body": "{\n  \"@odata.type\": \"#microsoft.graph.aadUserConversationMember\",\n  \"roles\": [],\n  \"user@odata.bind\": \"https://graph.microsoft.com/v1.0/users('@{coalesce(item()?['Email'], item()?['UserPrincipalName'])}')\"\n}",
+                      "ContentType": "application/json"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                      "operationId": "HttpRequest",
+                      "connectionName": "shared_teams"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Compose_-_join_de_correos_de_ingeniería": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Foreach"
+            },
+            "Post_-_Mensaje_de_bienvenida": {
+              "runAfter": {
+                "Apply_to_each_1": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "poster": "Flow bot",
+                  "location": "Channel",
+                  "body/recipient/groupId": "d4e4453c-578a-4e64-a4cc-eddfd3946b66",
+                  "body/recipient/channelId": "@variables('channelid')",
+                  "body/messageBody": "<p class=\"editor-paragraph\">¡Hola @{first(split(triggerBody()?['text_6'], ' '))}!</p><p class=\"editor-paragraph\">¡Felicitaciones! has creado un nuevo proyecto en <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal\" class=\"editor-link\">ALLOPS</a>. Puedes consultar más detalles aqui:</p><p class=\"editor-paragraph\">@{variables('cfg2')['varLink']}</p><p class=\"editor-paragraph\"><u><span class=\"editor-text-underline\">Consejos útiles</span></u>:</p><p class=\"editor-paragraph\">• Inicia el proyecto completando el formulario RPA (Request for project approval) para la solicitud de fondos. <a href=\"https://sikacloud.sharepoint.com/:f:/r/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/General/Instructivos%20del%20sitio/Creaci%C3%B3n%20de%20RPAs?csf=1&amp;web=1&amp;e=dwB81P\" class=\"editor-link\">Aqui</a> tienes un breve instructivo para hacerlo (abre la carpeta correspondiente a tu país).<br>• ALL OPS te permite crear @{variables('cfg2')['ganttlink']} el diagrama de Gantt básico del proyecto aun sin tener una licencia de MS Project. También puedes compartirlo con otro miembro de Sika si lo deseas.<br>• Si ya posees una licencia de MS Project puedes obtener resultados profesionales sincronizando el diagrama de Gantt anterior con @{variables('cfg2')['mpplink']} que hemos creado en base a la complejidad del proyecto que nos has indicado (@{triggerBody()?['text_7']}). Encontrarás el instructivo <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FSincronizaci%C3%B3n%20MS%20Project%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">aquí</a>.<br>• Recuerda que para este proyecto puedes seguir @{variables('cfg2')['ctlink']} el detalle de costos pronosticados, comprometidos y gastados. Si eres parte del equipo de ingeniería en tu país <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FActualizaci%C3%B3n%20Cost%20Tracking%20file%20desde%20SAP%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">este instructivo</a> te explicará paso a paso como actualizar desde SAP todas las partidas, caso contrario no te preocupes, serán actualizadas regularmente por ellos.<br>• En todo momento puedes consultar @{variables('cfg2')['dblink']} el tablero general de proyecto con los principales indicadores financieros y la curva S (aguarda unos minutos para utilzar este enlace).<br>• En @{variables('cfg2')['shrd_fold_link']} puedes intercambiar documentos con proveedores externos a la compañía. <a href=\"https://sikacloud.sharepoint.com/:f:/r/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/General/Instructivos%20del%20sitio/Compartir%20archivos%20con%20externos/01-Issued/Latest?csf=1&amp;web=1&amp;e=qibIqK\" class=\"editor-link\">Aquí</a> tienes un instructivo sobre cómo hacerlo.<br>• En la @{variables('cfg2')['bluefld_link']} encontrarás la estructura estándar de proyecto para que utilices a tu conveniencia almacenando la información en la nube de ALLOPS. Te recomendamos que actives la sincronización de la carpeta azul con tu explorador de archivos para que puedas accederla como cualquier carpeta en tu PC sin tener que usar Microsoft Edge (Encontrará el instructivo <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FmsTeams%2D4053%2D796%5FInternal%2DInternal%2FShared%20Documents%2FGeneral%2FInstructivos%20del%20sitio%2FSincronizaci%C3%B3n%20con%20explorador%20de%20archivos%2F01%2DIssued%2FLatest&amp;viewid=ade3687b%2D5fb2%2D40e3%2Db66b%2D7338bc669b82&amp;csf=1&amp;web=1&amp;e=dwB81P&amp;CID=448be5c8%2D46f3%2D4cf4%2Da818%2D83f5d34038da&amp;FolderCTID=0x012000EAA5135AA2121B468D4236F55043F6AF\" class=\"editor-link\">aquí</a>).<br>• Recuerda que puedes encontrar en el <a href=\"https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/SitePages/Maintenance.aspx\" class=\"editor-link\">MarketPlace Interno</a> de ALLOPS algunos bienes que no usamos y podrían servir para tu proyecto, lo cual reduce el impacto financiero por impairments y el costo general del proyecto.<br>• En caso de dudas o incovenientes con ALLOPS puedes comunicarte con tu equipo de ingeniería usando este mismo chat.<br></p><br><p class=\"editor-paragraph\">Saludos!,</p><br><br>"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                  "operationId": "PostMessageToConversation",
+                  "connectionName": "shared_teams"
+                }
+              }
+            },
+            "Get_file_-_Foto_1": {
+              "runAfter": {
+                "Post_-_Mensaje_de_bienvenida": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "path": "/Shared Documents/Images/notif 1.png",
+                  "inferContentType": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFileContentByPath",
+                  "connectionName": "shared_sharepointonline-2"
+                }
+              }
+            },
+            "Get_file_-_Foto_2": {
+              "runAfter": {
+                "Get_file_-_Foto_1": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "path": "/Shared Documents/Images/notid 2.png",
+                  "inferContentType": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFileContentByPath",
+                  "connectionName": "shared_sharepointonline-2"
+                }
+              }
+            },
+            "Get_file_-_Foto_3": {
+              "runAfter": {
+                "Get_file_-_Foto_2": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "path": "/Shared Documents/Images/notif 3.png",
+                  "inferContentType": true
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetFileContentByPath",
+                  "connectionName": "shared_sharepointonline-2"
+                }
+              }
+            },
+            "Graph_HTTP_-_Post_-_Mensaje_de_recomendaciones": {
+              "runAfter": {
+                "Get_file_-_Foto_3": [
+                  "Succeeded"
+                ]
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "Uri": "https://graph.microsoft.com/v1.0/teams/d4e4453c-578a-4e64-a4cc-eddfd3946b66/channels/@{variables('channelid')}/messages",
+                  "Method": "POST",
+                  "CustomHeader1": "Accept: application/json",
+                  "CustomHeader2": "ContentType: application/json",
+                  "Body": "{\n  \"subject\": \"Pasos a seguir con tu canal\",\n  \"body\": {\n    \"contentType\": \"html\",\n    \"content\": \"<p>🔴<u><b><span style=\\\"color:#d0021b;\\\">¡IMPORTANTE!</span></b></u><br/><br/>• Para asegurarte de recibir las novedades de este proyecto, por favor <u><b>activa las notificaciones</b></u>:<br/><br/>1. En la parte superior, haz clic en los tres puntitos.<br/>2. Selecciona \\\"Notificaciones del canal\\\".<br/>3. Configura las notificaciones como se ve en la imagen.</p><br/><p><img src=\\\"../hostedContents/1/$value\\\" width=\\\"500\\\" /></p><p><img src=\\\"../hostedContents/2/$value\\\" width=\\\"500\\\" /></p><p><img src=\\\"../hostedContents/3/$value\\\" width=\\\"500\\\" /></p><br/>• Además, cuando quieras escribir en este canal y que todos los miembros reciban aviso o cuando quieras comunicarte con el equipo de ingeniería, por favor usa siempre @canal en tu mensaje.<br/>\"\n  },\n  \"hostedContents\": [\n    {\n      \"@microsoft.graph.temporaryId\": \"1\",\n      \"contentBytes\": \"@{body('Get_file_-_Foto_1')?['$content']}\",\n      \"contentType\": \"image/png\"\n    },\n    {\n      \"@microsoft.graph.temporaryId\": \"2\",\n      \"contentBytes\": \"@{body('Get_file_-_Foto_2')?['$content']}\",\n      \"contentType\": \"image/png\"\n    },\n    {\n      \"@microsoft.graph.temporaryId\": \"3\",\n      \"contentBytes\": \"@{body('Get_file_-_Foto_3')?['$content']}\",\n      \"contentType\": \"image/png\"\n    }\n  ]\n}",
+                  "ContentType": "application/json"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_teams",
+                  "operationId": "HttpRequest",
+                  "connectionName": "shared_teams"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "in_var_-_Objeto_links_para_el_correo": [
+              "Succeeded"
+            ]
+          },
+          "type": "Scope"
+        },
+        "Append_to_array_variable_-_error_en_crear_carpetas": {
+          "runAfter": {
+            "Creación_de_carpetas": [
+              "Failed"
+            ]
+          },
+          "type": "AppendToArrayVariable",
+          "inputs": {
+            "name": "varError",
+            "value": "Crear carpetas"
+          }
+        },
+        "Append_to_array_variable_-_error_en_crear_carpeta_compartida": {
+          "runAfter": {
+            "Creación_de_carpeta_compartida": [
+              "Failed"
+            ]
+          },
+          "type": "AppendToArrayVariable",
+          "inputs": {
+            "name": "varError",
+            "value": "Crear carpeta compartida"
+          }
+        },
+        "Append_to_array_variable_-_error_en_enviar_correo_de_bienvenida": {
+          "runAfter": {
+            "Correo_de_bienvenida": [
+              "Failed"
+            ]
+          },
+          "type": "AppendToArrayVariable",
+          "inputs": {
+            "name": "varError",
+            "value": "Enviar el correo electrónico"
+          }
+        },
+        "Append_to_array_variable_-_error_en_crear_teams": {
+          "runAfter": {
+            "Crecaión_de_canal_de_Teams": [
+              "Failed"
+            ]
+          },
+          "type": "AppendToArrayVariable",
+          "inputs": {
+            "name": "varError",
+            "value": "Crear canal de Teams"
+          }
+        },
+        "in_var_-_export_uri_(vacía)": {
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0c7d28c9-792e-461c-8040-cf0540d1334c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "exportUri",
+                "type": "array"
+              }
+            ]
+          },
+          "description": "Se crea la variable vacía para usarla luego (es para el uri que pide el paso de send HTTP request...)."
+        },
+        "in_var_-_correos_de_los_Owner_del_sitio_(vacía)": {
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ownEmails",
+                "type": "array"
+              }
+            ]
+          },
+          "description": "Se crea para buscarlos luego y mandarles el correo de cantidad excedida."
+        },
+        "in_var_-_filename": {
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ff4b828c-86e6-41bc-b1ef-33f4aec145cd"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "filename",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "in_var_-_Enlace_de_ALLOPS": {
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f1258f14-dc5c-41e7-a716-2b54df8481f6"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "ALLOPSUrl",
+                "type": "string",
+                "value": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_@{triggerBody()?['text_1']}/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}/15.Comunication (InternalExt.)"
+              }
+            ]
+          }
+        },
+        "in_var_-_Enlace_de_ALLOPS_ext": {
+          "runAfter": {
+            "in_var_-_Enlace_de_ALLOPS": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "978c8983-ff57-4f15-9d9d-d759bfc505f4"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "Externalurl",
+                "type": "string",
+                "value": "https://sikacloud.sharepoint.com/sites/msTeams-8374-642_External-Internal/@{triggerBody()?['text']}_@{triggerBody()?['text_1']}/@{triggerBody()?['text_2']}/@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}/15.Comunication (InternalExt.)"
+              }
+            ]
+          }
+        },
+        "Compose_-_Formato_de_nombre": {
+          "runAfter": {
+            "in_var_-_correos_de_los_Owner_del_sitio_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "3450d59d-4778-4ca3-a71c-0f7adb83dd83"
+          },
+          "type": "Compose",
+          "inputs": "@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{triggerBody()?['text_4']}",
+          "description": "Se define solo para hacerla más fácil en el momento de crear el canal"
+        },
+        "in_var_-_ID_del_canal_de_teams_(vacía)": {
+          "runAfter": {
+            "Compose_-_Formato_de_nombre": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "46ac924f-3ca1-415b-b101-8a4f71a64353"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "channelid",
+                "type": "string"
+              }
+            ]
+          },
+          "description": "Se crea para buscar el id y usarla en próximos pasos."
+        },
+        "in_var_-_correos_de_equipo_de_ingeniería": {
+          "runAfter": {
+            "in_var_-_ID_del_canal_de_teams_(vacía)": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "bb372c0d-4aa2-4875-b8b2-4b1b6960d24c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "engEmails",
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "in_var_-_Objeto_de_enlaces": {
+          "runAfter": {
+            "in_var_-_Cuenta_de_servicio": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "90e151d3-0f35-49f2-a0cb-617ee1e5c645"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "cfg",
+                "type": "object",
+                "value": {
+                  "varLink": "<a href='@{triggerBody()?['text_11']}'>@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’')}</a>",
+                  "ganttlink": "<a href='https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt/Lists/@{triggerBody()?['text_3']}/gantt.aspx'>aquí</a>",
+                  "mpplink": "<a href='https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt/SiteAssets/@{triggerBody()?['text']}_Gantt-@{triggerBody()?['text_3']}.mpp'>este archivo MS Project</a>",
+                  "ctlink": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/03.Eng. Manu. Technology/02.CostCtrl',\r\n     '''>aquí</a>')}",
+                  "dblink": "@{concat('<a href=''',\r\n     'https://app.powerbi.com/groups/a85a3586-a19e-49cb-9c06-480bf99c686e/reports/86d05444-6036-4979-8497-9f901a710b54/ReportSection?experience=power-bi&filter=',\r\n     'CapEx_x0020_list%2FCPX_x0020_ID_x0020__x0023_%20eq%20',\r\n     encodeUriComponent(concat('''',triggerBody()?['text_3'],'''')),\r\n     '%20and%20',\r\n     'Data_x0020_ALL_x0020_Qs%2FCPX_x0020_ID_x0020__x0023_%20eq%20',\r\n     encodeUriComponent(concat('''',triggerBody()?['text_3'],'''')),\r\n     '''>aquí</a>')}",
+                  "shrd_fold_link": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/15.Comunication (InternalExt.)',\r\n     '''>esta carpeta</a>')}",
+                  "bluefld_link": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '''>carpeta azul</a>')}"
+                }
+              }
+            ]
+          }
+        },
+        "in_var_-_correos_de_grupo_de_ingeniería": {
+          "runAfter": {
+            "in_var_-_Objeto_de_enlaces": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "bb372c0d-4aa2-4875-b8b2-4b1b6960d24c"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "grpEmails",
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "Condition_1": {
+          "actions": {
+            "Send_an_email_(V2)_3": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@outputs('Compose_-_join_de_correos_de_ingeniería')",
+                  "emailMessage/Subject": "CPX Child flow – Error",
+                  "emailMessage/Body": "<p class=\"editor-paragraph\">El flujo terminó con errores en las ramas:<br>@{join(variables('varError'), ', ')}</p><br><p class=\"editor-paragraph\">Info del proyecto:<br>CPX ID #: @{triggerBody()?['text_3']}<br>Project Manager: @{triggerBody()?['text_6']}<br>CPX Name: @{triggerBody()?['text_4']}<br>Company ISO code: @{triggerBody()?['text']}<br>Site: @{triggerBody()?['text_1']}</p><br>",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "operationId": "SendEmailV2",
+                  "connectionName": "shared_office365-1"
+                }
+              }
+            }
+          },
+          "runAfter": {
+            "Append_to_array_variable_-_error_en_crear_carpetas": [
+              "Succeeded",
+              "Skipped",
+              "TimedOut",
+              "Failed"
+            ],
+            "Append_to_array_variable_-_error_en_crear_carpeta_compartida": [
+              "Succeeded",
+              "TimedOut",
+              "Skipped",
+              "Failed"
+            ],
+            "Append_to_array_variable_-_error_en_enviar_correo_de_bienvenida": [
+              "Succeeded",
+              "TimedOut",
+              "Skipped",
+              "Failed"
+            ],
+            "Append_to_array_variable_-_error_en_crear_teams": [
+              "Succeeded",
+              "TimedOut",
+              "Skipped",
+              "Failed"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "greater": [
+                  "@length(variables('varError'))",
+                  0
+                ]
+              }
+            ]
+          },
+          "type": "If"
+        },
+        "Delay_1": {
+          "runAfter": {
+            "Condition_1": [
+              "Succeeded"
+            ]
+          },
+          "type": "Wait",
+          "inputs": {
+            "interval": {
+              "count": 15,
+              "unit": "Second"
+            }
+          }
+        },
+        "Terminate": {
+          "runAfter": {
+            "Delay_1": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "36fce060-03a0-4cad-b44b-a7182e0c7563"
+          },
+          "type": "Terminate",
+          "inputs": {
+            "runStatus": "Succeeded"
+          }
+        },
+        "in_var_-_Cuenta_de_servicio": {
+          "runAfter": {
+            "in_var_-_Indicador_de_Error": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "srvacc",
+                "type": "string",
+                "value": "chcsrvpowerplatformautomation@sika.com"
+              }
+            ]
+          },
+          "description": "¡OJO! Esta variable esta creada exclusivamente para que en el paso de crear canal de teams, la cuenta de servicio use sus credenciales. Si en algun momento se quiere ejecutar en personal env, del 1er paso de la rama teams borrar donde llama a esta variable"
+        },
+        "in_var_-_Objeto_links_para_el_correo": {
+          "runAfter": {
+            "in_var_-_correos_de_equipo_de_ingeniería": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "90e151d3-0f35-49f2-a0cb-617ee1e5c645"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "cfg2",
+                "type": "object",
+                "value": {
+                  "varLink": "<a href='@{triggerBody()?['text_11']}'>@{triggerBody()?['text_3']}_@{triggerBody()?['text_1']}_@{replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’')}</a>",
+                  "ganttlink": "<a href='https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt/Lists/@{triggerBody()?['text_3']}/gantt.aspx'>aquí</a>",
+                  "mpplink": "<a href='https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/@{triggerBody()?['text']}_Gantt/SiteAssets/@{triggerBody()?['text']}_Gantt-@{triggerBody()?['text_3']}.mpp'>este archivo MS Project</a>",
+                  "ctlink": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/03.Eng. Manu. Technology/02.CostCtrl',\r\n     '''>aquí</a>')}",
+                  "dblink": "@{concat('<a href=''',\r\n     'https://app.powerbi.com/groups/a85a3586-a19e-49cb-9c06-480bf99c686e/reports/86d05444-6036-4979-8497-9f901a710b54/ReportSection?experience=power-bi&filter=',\r\n     'CapEx_x0020_list%2FCPX_x0020_ID_x0020__x0023_%20eq%20',\r\n     encodeUriComponent(concat('''',triggerBody()?['text_3'],'''')),\r\n     '%20and%20',\r\n     'Data_x0020_ALL_x0020_Qs%2FCPX_x0020_ID_x0020__x0023_%20eq%20',\r\n     encodeUriComponent(concat('''',triggerBody()?['text_3'],'''')),\r\n     '''>aquí</a>')}",
+                  "shrd_fold_link": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/15.Comunication (InternalExt.)',\r\n     '''>esta carpeta</a>')}",
+                  "bluefld_link": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     triggerBody()?['text'],'_',triggerBody()?['text_1'],'/',\r\n     string(triggerBody()?['text_2']), '/',\r\n     triggerBody()?['text_3'],'_',triggerBody()?['text_1'],'_',\r\n     replace(replace(replace(replace(triggerBody()?['text_4'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '''>carpeta azul</a>')}"
+                }
+              }
+            ]
+          },
+          "description": "Replica a cfg del correo de bienvenida"
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}
