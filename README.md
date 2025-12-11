@@ -13,6 +13,7 @@ Reducir el trabajo manual al crear un nuevo proyecto CapEx:
 - Centralizar la información del proyecto en una lista maestra de SharePoint.
 - Proveer al usuario final todos los enlaces clave en un solo correo automático.
 - Facilitar el seguimiento de costos y la planificación (Gantt / MS Project / dashboard).
+- Proveer un medio de comunicación (canal de MS Teams) para todos los miembros del proyecto y el equipo de ingeniería
 
 ---
 
