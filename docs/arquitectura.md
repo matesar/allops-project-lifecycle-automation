@@ -79,10 +79,9 @@ El proceso está dividido en dos flujos de Power Automate:
    Archivo: `CPXProvisioningChild-….json`  
    Rol:
    - Crear la estructura documental mediante `CreateCopyJobs`.
-   - Actualizar la lista maestra de proyectos.
    - Crear el canal de Teams y mensaje de bienvenida.
    - Enviar el correo automático al responsable.
-   - Registrar errores y devolver estado al PARENT (si aplica).
+   - Registrar errores y devolver estado.
 
 3. **Conectores principales**
    - `SharePoint` (acciones estándar + HTTP con `_api`).
@@ -96,7 +95,7 @@ El proceso está dividido en dos flujos de Power Automate:
 
 - **Team ALLOPS** (equipo donde se crean los canales de proyecto).  
 - El flujo CHILD utiliza **Microsoft Graph** para:
-  - Crear un **canal estándar** por proyecto.
+  - Crear un **canal compartido** por proyecto.
   - Publicar un **mensaje de bienvenida** con los enlaces principales (SharePoint, cost tracking, dashboard, etc.).
 
 ---
