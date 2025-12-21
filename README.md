@@ -130,7 +130,7 @@ The high-level process is:
      - Access all related resources.
      - Open dashboards already filtered by project.
 
-See the diagram and technical details in [`docs/arquitectura.md`](docs/arquitectura.md).
+See the diagram and technical details in [`docs/architecture.md`](docs/architecture.md).
 
 ---
 
