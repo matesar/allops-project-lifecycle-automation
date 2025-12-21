@@ -114,9 +114,9 @@ https://app.powerbi.com/embed
   &filter=<TableName>/<ColumnName> eq '<CPX_ID>'
 ```
 
-1. Typical pattern inside the app:
+Typical pattern inside the app:
 
-When a project is selected, store its CPX ID in a variable, e.g.: Set(varCPXId, ThisItem.'CPX ID#');
+1. When a project is selected, store its CPX ID in a variable, e.g.: Set(varCPXId, ThisItem.'CPX ID#');
 
 2. Build the tile URL dynamically:
 
