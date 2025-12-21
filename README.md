@@ -1,4 +1,4 @@
-# ALLOPS – CapEx Project Provisioning (Power Automate + Power Apps)
+# ALLOPS – CapEx Project Provisioning (Power Apps + Power Automate)
 
 La solución combina **Power Automate**, **Power Apps**, **SharePoint** y **Power BI** para:
 - Crear la estructura documental base del proyecto.
