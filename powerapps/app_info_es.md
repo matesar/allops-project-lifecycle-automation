@@ -163,4 +163,4 @@ Algunos patrones usados en la app:
     - Dataset/campos de Power BI,
   requiere una actualización correspondiente en las fórmulas y bindings de la app.
 
-Para más detalles sobre la lógica de backend (flujos y listas), ver [`flows/flows_info.md`](flows/flows_info.md) and [`docs/architecture.md`](docs/architecture.md).
+Para más detalles sobre la lógica de backend (flujos y listas), ver [`flows/flows_info_es.md`](flows/flows_info_es.md) and [`docs/architecture_es.md`](docs/architecture_es.md).
