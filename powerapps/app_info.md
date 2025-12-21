@@ -127,10 +127,7 @@ When a project is selected, store its CPX ID in a variable, e.g.: Set(varCPXId, 
 
 3. Assign that expression to the Image, HtmlText or appropriate property of the control used to display the tile.
 
-Notes:
-
-The %20, _x0020_, _x0023_, etc. are the encoded characters that come from SharePoint / Power BI field names.
-
-Exact TableName and ColumnName must match the dataset used by the tile.
-
-Filtering works on tiles, not on full reports without the proper configuration
+>**Notes**:
+>The %20, _x0020_, _x0023_, etc. are the encoded characters that come from SharePoint / Power BI field names.
+>Exact TableName and ColumnName must match the dataset used by the tile.
+>Filtering works on tiles, not on full reports without the proper configuration
