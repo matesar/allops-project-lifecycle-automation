@@ -164,4 +164,4 @@ Some patterns used in the app:
     - Power BI dataset/fields
   require a corresponding update in the app formulas and bindings.
 
-For more details on the backend logic (flows and lists), see flows/flows_info and docs/architecture.md
+For more details on the backend logic (flows and lists), see [`flows/flows_info.md`](flows/flows_info.md) and [`docs/architecture.md`](docs/architecture.md).
