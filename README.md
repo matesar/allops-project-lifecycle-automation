@@ -1,9 +1,11 @@
-# ALLOPS – CapEx Project Provisioning (Power Apps + Power Automate)
+# ALLOPS – CapEx Project Lifecycle Automation (Power Apps + Power Automate)
 
 This solution combines **Power Automate**, **Power Apps**, **SharePoint** and **Power BI** to:
 
 - Create the project’s base document structure.
 - Centralize project metadata in a master list.
+- Automatically enforce business rules (status, complexity, closure logic).
+- Monitor budget deviations (110% committed threshold).
 - Provide the Project Manager (PM) with key links (documents, Gantt, cost tracking, dashboard, shared folder).
 - Facilitate communication through a Microsoft Teams channel.
 - Offer a user-friendly interface to create and browse projects.
@@ -31,7 +33,9 @@ Reduce manual work when creating a new CapEx project:
 
 ### 1. Power Automate flows (`flows/`)
 
-Automate project creation and preparation:
+The solution includes multiple flows covering provisioning, governance and financial monitoring:
+
+#### 🔹 CPX Initialization (Parent + Child)
 
 - **Parent – `CPXinitializationARParent-*.json`**  
   - Triggered when a new item is created in the projects list.  
@@ -42,6 +46,40 @@ Automate project creation and preparation:
   - Updates the master projects list with the generated links.  
   - (Optionally) creates a Teams channel and a welcome post.  
   - Sends an automatic email to the project owner with all key links.
+
+---
+#### 🔹 CPX Closure Automation – `CPX-closure.json`
+
+Ensures reporting consistency and correct eFTE calculation.
+
+- When **CPX Status** changes to **Done** or **Closed**:
+  - Automatically sets **CPX Complexity = "All (CPX Closure)"**.
+- If a project moves back from **Done/Closed → In progress**:
+  - Sets **CPX Complexity = "Low"**.
+- For any other transition:
+  - The flow does not override complexity.
+
+This guarantees alignment between operational status and reporting logic.
+
+---
+
+#### 🔹 CPX Warning – 110% Budget Rule – `CPXWarning110.json`
+
+Monitors committed amounts (COMM) against the approved budget.
+
+- Dynamically calculates total committed values:
+  - Committed till PFY
+  - COMMPFY P1–P12
+  - COMMCFY P1–P12
+- Compares against approved budget.
+- If committed exceeds **110%**, the flow:
+  - Sends a formatted HTML alert to the PM.
+  - Suggests review of open POs/contracts.
+  - Recommends fund extension if applicable.
+
+This flow implements an automated financial governance control.
+
+---
 
 Technologies used in the flows:
 
@@ -100,6 +138,17 @@ The solution assumes:
 - Some tiles are **embedded in Power Apps** and filtered by project ID (CPX ID) using URL parameters on the tile.
 
 ---
+## Governance & Control Layer
+
+Beyond project provisioning, this solution introduces automated governance controls:
+
+- Status-to-complexity enforcement.
+- Budget threshold monitoring (110% rule).
+- Automatic stakeholder notification.
+- Centralized reporting consistency across AR, PE and Master lists.
+
+This transforms the tool from a provisioning utility into a structured CapEx control framework.
+
 
 ## High-level architecture
 
@@ -152,4 +201,4 @@ See the diagram and technical details in [`docs/architecture.md`](docs/architect
 │   └── screenshots/                       # PNG/JPG screenshots used in the docs
 └── docs/
     └── arquitectura.md                    # Technical architecture documentation
-    └── solution_export
+    └── solution_export/
