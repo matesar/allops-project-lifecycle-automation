@@ -142,6 +142,8 @@ See the diagram and technical details in [`docs/architecture.md`](docs/architect
 ├── flows/
 │   ├── CPXProvisioningChild-292B8380-6DC1-F011-BBD2-6045BD9F321D.json       # Export of CHILD Power Automate flow
 │   ├── CPXinitializationARParent-CFFF159C-D4CA-F011-8544-7CED8D592B6B.json  # Export of PARENT Power Automate flow
+│   ├── CPX-closure.json    # Export of the aditional flow
+│   ├── CPXWarning110.json  # Export of the aditional flow
 │   └── flows_info.md                                                       # Detailed description of the flows
 ├── powerapps/
 │   ├── CapexProjectInitApp.msapp          # Export of the Power Apps app
