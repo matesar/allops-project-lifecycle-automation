@@ -1,0 +1,310 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedsharepointonline_aaf43"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_an_item_is_created_or_modified": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 1
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetOnUpdatedItems",
+              "connectionName": "shared_sharepointonline"
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_changes_for_an_item_or_a_file_(properties_only)": {
+          "runAfter": {},
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5",
+              "id": "@triggerBody()?['ID']",
+              "since": "@triggerBody()?['{TriggerWindowStartToken}']",
+              "includeDrafts": false
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetItemChanges",
+              "connectionName": "shared_sharepointonline"
+            }
+          }
+        },
+        "Condition": {
+          "actions": {
+            "Compose_-_cpx_status": {
+              "type": "Compose",
+              "inputs": "@triggerBody()?['CPXStatus/Value']"
+            },
+            "Compose_1_-_prev_status": {
+              "runAfter": {
+                "Compose_-_cpx_status": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Compose",
+              "inputs": "@triggerBody()?['CPX_x0020_Status_x0020_Prev/Value']"
+            },
+            "Compose_2_-_complex": {
+              "runAfter": {
+                "Compose_1_-_prev_status": [
+                  "Succeeded"
+                ]
+              },
+              "type": "Compose",
+              "inputs": "@triggerBody()?['Projectcomplexity/Value']"
+            },
+            "Condition_1": {
+              "actions": {
+                "SharePoint_HTTP_request_-_Complexity:_Closure": {
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                      "parameters/method": "POST",
+                      "parameters/uri": "_api/web/lists/GetByTitle('AdminCapEx')/items(@{triggerBody()?['ID']})",
+                      "parameters/headers": {
+                        "Accept": "application/json;odata=nometadata",
+                        "Content-Type": "application/json;odata=nometadata",
+                        "IF-MATCH": "*",
+                        "X-HTTP-Method": "MERGE"
+                      },
+                      "parameters/body": "{\n\"Projectcomplexity\": \"All (CPX closure)\"\n}"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                      "operationId": "HttpRequest",
+                      "connectionName": "shared_sharepointonline"
+                    }
+                  }
+                },
+                "SharePoint_HTTP_request_-_Prev_Status_Update_": {
+                  "runAfter": {
+                    "SharePoint_HTTP_request_-_Complexity:_Closure": [
+                      "Succeeded"
+                    ]
+                  },
+                  "type": "OpenApiConnection",
+                  "inputs": {
+                    "parameters": {
+                      "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                      "parameters/method": "POST",
+                      "parameters/uri": "_api/web/lists/GetByTitle('AdminCapEx')/items(@{triggerBody()?['ID']})",
+                      "parameters/headers": {
+                        "Accept": "application/json;odata=nometadata",
+                        "Content-Type": "application/json;odata=nometadata",
+                        "IF-MATCH": "*",
+                        "X-HTTP-Method": "MERGE"
+                      },
+                      "parameters/body": "{\n\"CPX_x0020_Status_x0020_Prev\": \"@{outputs('Compose_-_cpx_status')}\"\n}"
+                    },
+                    "host": {
+                      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                      "operationId": "HttpRequest",
+                      "connectionName": "shared_sharepointonline"
+                    }
+                  }
+                }
+              },
+              "runAfter": {
+                "Compose_2_-_complex": [
+                  "Succeeded"
+                ]
+              },
+              "else": {
+                "actions": {
+                  "Condition_2": {
+                    "actions": {
+                      "SharePoint_HTTP_request_-_Complexity:_Low_": {
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "parameters": {
+                            "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                            "parameters/method": "POST",
+                            "parameters/uri": "_api/web/lists/GetByTitle('AdminCapEx')/items(@{triggerBody()?['ID']})",
+                            "parameters/headers": {
+                              "Accept": "application/json;odata=nometadata",
+                              "Content-Type": "application/json;odata=nometadata",
+                              "IF-MATCH": "*",
+                              "X-HTTP-Method": "MERGE"
+                            },
+                            "parameters/body": "{\n\"Projectcomplexity\": \"Low\"\n}"
+                          },
+                          "host": {
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                            "operationId": "HttpRequest",
+                            "connectionName": "shared_sharepointonline"
+                          }
+                        }
+                      },
+                      "SharePoint_HTTP_request_-_Prev_Status_Update_2": {
+                        "runAfter": {
+                          "SharePoint_HTTP_request_-_Complexity:_Low_": [
+                            "Succeeded"
+                          ]
+                        },
+                        "type": "OpenApiConnection",
+                        "inputs": {
+                          "parameters": {
+                            "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                            "parameters/method": "POST",
+                            "parameters/uri": "_api/web/lists/GetByTitle('AdminCapEx')/items(@{triggerBody()?['ID']})",
+                            "parameters/headers": {
+                              "Accept": "application/json;odata=nometadata",
+                              "Content-Type": "application/json;odata=nometadata",
+                              "IF-MATCH": "*",
+                              "X-HTTP-Method": "MERGE"
+                            },
+                            "parameters/body": "{\n\"CPX_x0020_Status_x0020_Prev\": \"@{outputs('Compose_-_cpx_status')}\"\n}"
+                          },
+                          "host": {
+                            "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                            "operationId": "HttpRequest",
+                            "connectionName": "shared_sharepointonline"
+                          }
+                        }
+                      }
+                    },
+                    "else": {
+                      "actions": {
+                        "SharePoint_HTTP_request_-_Prev_Status_Update_3": {
+                          "type": "OpenApiConnection",
+                          "inputs": {
+                            "parameters": {
+                              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                              "parameters/method": "POST",
+                              "parameters/uri": "_api/web/lists/GetByTitle('AdminCapEx')/items(@{triggerBody()?['ID']})",
+                              "parameters/headers": {
+                                "Accept": "application/json;odata=nometadata",
+                                "Content-Type": "application/json;odata=nometadata",
+                                "IF-MATCH": "*",
+                                "X-HTTP-Method": "MERGE"
+                              },
+                              "parameters/body": "{\n\"CPX_x0020_Status_x0020_Prev\": \"@{outputs('Compose_-_cpx_status')}\"\n}"
+                            },
+                            "host": {
+                              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                              "operationId": "HttpRequest",
+                              "connectionName": "shared_sharepointonline"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "expression": {
+                      "and": [
+                        {
+                          "equals": [
+                            "@outputs('Compose_-_cpx_status')",
+                            "In progress"
+                          ]
+                        },
+                        {
+                          "or": [
+                            {
+                              "equals": [
+                                "@outputs('Compose_1_-_prev_status')",
+                                "Done"
+                              ]
+                            },
+                            {
+                              "equals": [
+                                "@outputs('Compose_1_-_prev_status')",
+                                "Closed"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "type": "If"
+                  }
+                }
+              },
+              "expression": {
+                "or": [
+                  {
+                    "equals": [
+                      "@outputs('Compose_-_cpx_status')",
+                      "Done"
+                    ]
+                  },
+                  {
+                    "equals": [
+                      "@outputs('Compose_-_cpx_status')",
+                      "Closed"
+                    ]
+                  }
+                ]
+              },
+              "type": "If"
+            }
+          },
+          "runAfter": {
+            "Get_changes_for_an_item_or_a_file_(properties_only)": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {
+              "Terminate": {
+                "type": "Terminate",
+                "inputs": {
+                  "runStatus": "Succeeded"
+                }
+              }
+            }
+          },
+          "expression": {
+            "and": [
+              {
+                "equals": [
+                  "@outputs('Get_changes_for_an_item_or_a_file_(properties_only)')?['body/ColumnHasChanged/CPXStatus']",
+                  true
+                ]
+              }
+            ]
+          },
+          "type": "If"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

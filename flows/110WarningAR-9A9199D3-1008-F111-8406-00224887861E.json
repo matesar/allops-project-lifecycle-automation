@@ -1,0 +1,717 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedsharepointonline_aaf43"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "sikaapps_sharedoffice365_ccf66"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_sharepointonline-1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "ms_sharedsharepointonline_564d3"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        }
+      },
+      "triggers": {
+        "When_an_item_is_created_or_modified": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 1
+          },
+          "evaluatedRecurrence": {
+            "frequency": "Minute",
+            "interval": 1
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "0cf9a87b-b82a-40a0-a03e-da92f3f4afb1"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetOnUpdatedItems"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "invar_-_totalcomm": {
+          "runAfter": {
+            "Compose_1": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "14b424f9-405d-4d23-a8c2-843ac914dd31"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varCommTotal",
+                "type": "float",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "setvar_-_totalcomm": {
+          "runAfter": {
+            "invar_-_totalcomm": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "567b2be0-ec6d-4302-93ce-17d79a421bb2"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "varCommTotal",
+            "value": "@add(\r\n  add(\r\n    add(\r\n      add(\r\n        add(\r\n          add(\r\n            add(\r\n              add(\r\n                add(\r\n                  add(\r\n                    add(\r\n                      add(\r\n                        coalesce(outputs('Get_item')?['body/Committed_x0020_till_x0020_PFY'], 0),\r\n                        coalesce(outputs('Get_item')?['body/COMMPFYP1'], 0)\r\n                      ),\r\n                      coalesce(outputs('Get_item')?['body/COMMPFYP2'], 0)\r\n                    ),\r\n                    coalesce(outputs('Get_item')?['body/COMMPFYP3'], 0)\r\n                  ),\r\n                  coalesce(outputs('Get_item')?['body/COMMPFYP4'], 0)\r\n                ),\r\n                coalesce(outputs('Get_item')?['body/COMMPFYP5'], 0)\r\n              ),\r\n              coalesce(outputs('Get_item')?['body/COMMPFYP6'], 0)\r\n            ),\r\n            coalesce(outputs('Get_item')?['body/COMMPFYP7'], 0)\r\n          ),\r\n          coalesce(outputs('Get_item')?['body/COMMPFYP8'], 0)\r\n        ),\r\n        coalesce(outputs('Get_item')?['body/COMMPFYP9'], 0)\r\n      ),\r\n      coalesce(outputs('Get_item')?['body/COMMPFYP10'], 0)\r\n    ),\r\n    coalesce(outputs('Get_item')?['body/COMMPFYP11'], 0)\r\n  ),\r\n  add(\r\n    add(\r\n      add(\r\n        add(\r\n          add(\r\n            add(\r\n              add(\r\n                add(\r\n                  add(\r\n                    add(\r\n                      add(\r\n                        coalesce(outputs('Get_item')?['body/COMMPFYP12'], 0),\r\n                        coalesce(outputs('Get_item')?['body/COMMCFYP1'], 0)\r\n                      ),\r\n                      coalesce(outputs('Get_item')?['body/COMMCFYP2'], 0)\r\n                    ),\r\n                    coalesce(outputs('Get_item')?['body/COMMCFYP3'], 0)\r\n                  ),\r\n                  coalesce(outputs('Get_item')?['body/COMMCFYP4'], 0)\r\n                ),\r\n                coalesce(outputs('Get_item')?['body/COMMCFYP5'], 0)\r\n              ),\r\n              coalesce(outputs('Get_item')?['body/COMMCFYP6'], 0)\r\n            ),\r\n            coalesce(outputs('Get_item')?['body/COMMCFYP7'], 0)\r\n          ),\r\n          coalesce(outputs('Get_item')?['body/COMMCFYP8'], 0)\r\n        ),\r\n        coalesce(outputs('Get_item')?['body/COMMCFYP9'], 0)\r\n      ),\r\n      coalesce(outputs('Get_item')?['body/COMMCFYP10'], 0)\r\n    ),\r\n    add(\r\n      coalesce(outputs('Get_item')?['body/COMMCFYP11'], 0),\r\n      coalesce(outputs('Get_item')?['body/COMMCFYP12'], 0)\r\n    )\r\n  )\r\n)"
+          }
+        },
+        "Get_item": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "a4bff3ba-3248-46e8-9524-ce8365c72eb4"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "table": "0c088b70-cdaf-484a-b1c9-1a0fb5f160a5",
+              "id": "@triggerBody()?['ID']"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItem"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "invar_-_commpct": {
+          "runAfter": {
+            "setvar_-_totalcomm": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "8ebfc459-cecb-47db-9a22-ac93759c9753"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varCommPct",
+                "type": "float",
+                "value": "@div(variables('varCommTotal'),outputs('Get_item')?['body/RPABudget'])"
+              }
+            ]
+          }
+        },
+        "Condition": {
+          "actions": {
+            "Send_an_email_(V2)": {
+              "metadata": {
+                "operationMetadataId": "0497ac56-0d1e-4011-a53a-558c4007c4bb"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@outputs('Get_item')?['body/nombre/Email']",
+                  "emailMessage/Subject": "[ALLOPS] Budget warning - Proyecto @{outputs('Get_item')?['body/Title']} ",
+                  "emailMessage/Body": "\n\n  \n    <table cellpadding=\"0\" cellspacing=\"0\" style=\"background:#f3f4f6;padding:24px 0;\">\n      <tbody><tr>\n        <td style=\"padding:0 12px;\">\n          <!-- Container -->\n          <table cellpadding=\"0\" cellspacing=\"0\" style=\"width:1000px;max-width:1000px;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;\">\n            \n            <!-- Header -->\n            <tbody><tr>\n              <td style=\"background:#6d28d9;padding:18px 22px;\">\n                <div style=\"color:#ffffff;font-weight:700;font-size:18px;line-height:1.2;margin:0;\">\n                  ALLOPS · CapEx Warning\n                </div>\n                <div style=\"color:#ede9fe;font-size:12px;line-height:1.2;margin-top:6px;\">\n                  Comm vs Budget · 110% alcanzado\n                </div>\n              </td>\n            </tr>\n\n            <!-- Body -->\n            <tr>\n              <td style=\"padding:22px;\">\n                <div style=\"font-family:Segoe UI, Arial, sans-serif;color:#111827;\">\n                  <div style=\"font-size:18px;font-weight:700;margin:0 0 14px 0;\">\n                    Hola @{first(split(outputs('Get_item')?['body/nombre/DisplayName'], ' '))}\n                  </div>\n\n                 @{outputs('Compose')}\n\n<!-- Spacer -->\n<table cellpadding=\"0\" cellspacing=\"0\">\n  <tbody><tr>\n    <td style=\"height:20px; line-height:20px; font-size:0;\">&nbsp;</td>\n  </tr>\n</tbody></table>\n\n                  <!-- Main message box -->\n                  <table cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;border:1px solid #d1d5db;border-radius:12px;\">\n                    <tbody><tr>\n                      <td style=\"padding:18px;color:#111827;font-size:14px;line-height:1.6;\">\n                        <p style=\"margin: 0px 0px 12px 0px;\">\n                          Al actualizar nuestros registros hemos detectado que las partidas <b>comprometidas</b> (COMM) del proyecto\n                          @{variables('cfg')['varLink']} alcanzaron los <b>CHF @{formatNumber(variables('varCommTotal'),'0.0')}</b>.\n                          Este valor representa el <b>(@{formatNumber(variables('commpercent'),'0.0')}%)</b> del budget aprobado (<b>CHF @{outputs('Get_item')?['body/RPABudget']}</b>).\n                          En valores netos, se han comprometido <b>CHF @{variables('extracommvalue')} (@{formatNumber(variables('extracommpct'),'0.0')}%)</b> por encima del valor máximo absoluto (<b>110%</b>)\n                          según el manual de inversiones.\n                        </p>\n\n                        <p style=\"margin:0 0 12px 0;\">\n                          Te sugerimos que repases cada línea del @{variables('cfg')['ctlink']} verificando si todas las órdenes de compra\n                          o contratos imputados al proyecto están realmente vigentes y fueron enviados a sus respectivos proveedores ya que,\n                          de pagarse una vez recibido el bien o servicio, es probable que también el proyecto se exceda en valores gastados\n                          (<b>SPENT</b>) respecto al Budget aprobado, siendo esto último un desvío auditable.\n                        </p>\n\n                        <p style=\"margin:0;\">\n                          Si todas las partidas comprometidas están vigentes y son correctas podrías anticiparte a este problema (exceso de SPENT)\n                          tramitando para este proyecto una ampliación de fondos en la <a href=\"@{outputs('Get_item')?['body/RPAID_x0023_']}\">herramienta de aprobación de inversiones</a>.\n                        </p>\n                      </td>\n                    </tr>\n                  </tbody></table>\n\n                  <!-- Quick links -->\n                  <div style=\"font-size:12px;color:#6b7280;line-height:1.5;margin-top:14px;\">\n                    <b>Accesos rápidos:</b>\n                    @{variables('cfg')['costtracklink']}\n                    <span style=\"color:#c7c9d1;\">&nbsp;•&nbsp;</span>\n                    @{variables('cfg')['bluefld_link']}\n                    <span style=\"color:#c7c9d1;\">&nbsp;•&nbsp;</span>\n                    <a href=\"@{outputs('Get_item')?['body/RPAID_x0023_']}\">Aprobación / ampliación</a>\n                  </div>\n\n                  <div style=\"height:16px;line-height:16px;font-size:16px;\">&nbsp;</div>\n\n                  <div style=\"font-size:14px;line-height:1.6;color:#111827;\">\n                    Saludos cordiales.<br>\n                  </div>\n\n                  <div style=\"height:14px;line-height:14px;font-size:14px;\">&nbsp;</div>\n@{outputs('Compose_-_Foto_ALLOPS')}\n                  <div style=\"font-size:11px;color:#9ca3af;line-height:1.4;border-top:1px solid #e5e7eb;padding-top:12px;\">\n                    Este correo fue generado automáticamente. Si creés que es un error,  contactá al equipo de Ingeniería copiado en este correo.\n\n                  </div>\n                </div>\n              </td>\n            </tr>\n\n          </tbody></table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </tbody></table>\n  ",
+                  "emailMessage/Cc": "@outputs('Compose_-_correos_ing')",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Send_an_HTTP_request_to_SharePoint": {
+              "runAfter": {
+                "Send_an_email_(V2)": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "6a4361f3-d2ad-4496-8858-a5adf93f844c"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "POST",
+                  "parameters/uri": "_api/web/lists/getbytitle('AdminCapEx')/items(@{outputs('Get_item')?['body/ID']})",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata",
+                    "Content-Type": "application/json;odata=nometadata",
+                    "IF-MATCH": "*",
+                    "X-HTTP-Method": "MERGE"
+                  },
+                  "parameters/body": "{\n\"CommOver110_Notified\": true\n}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "HttpRequest"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "invar_-_extracommmpct": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "greaterOrEquals": [
+                  "@variables('varCommPct')",
+                  1.1
+                ]
+              },
+              {
+                "not": {
+                  "equals": [
+                    "@outputs('Get_item')?['body/CommOver110_Notified']",
+                    true
+                  ]
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "37f385e4-4c6f-4277-85b5-807f9c968f9a"
+          },
+          "type": "If"
+        },
+        "invar_-_totalspent": {
+          "runAfter": {
+            "Condition": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "35c9dced-22c0-404d-b949-3ace12de0d1d"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varSpentTotal",
+                "type": "float",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "setvar_-_totalspent": {
+          "runAfter": {
+            "invar_-_totalspent": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "4b2df126-a52f-4518-91eb-8577deadb4e7"
+          },
+          "type": "SetVariable",
+          "inputs": {
+            "name": "varSpentTotal",
+            "value": "@add(\r\n  add(\r\n    add(\r\n      add(\r\n        add(\r\n          add(\r\n            add(\r\n              add(\r\n                add(\r\n                  add(\r\n                    add(\r\n                      add(\r\n                        coalesce(outputs('Get_item')?['body/Spent_x0020_till_x0020_PFY'], 0),\r\n                        coalesce(outputs('Get_item')?['body/SPENTPFYP1'], 0)\r\n                      ),\r\n                      coalesce(outputs('Get_item')?['body/SPENTPFYP2'], 0)\r\n                    ),\r\n                    coalesce(outputs('Get_item')?['body/SPENTPFYP3'], 0)\r\n                  ),\r\n                  coalesce(outputs('Get_item')?['body/SPENTPFYP4'], 0)\r\n                ),\r\n                coalesce(outputs('Get_item')?['body/SPENTPFYP5'], 0)\r\n              ),\r\n              coalesce(outputs('Get_item')?['body/SPENTPFYP6'], 0)\r\n            ),\r\n            coalesce(outputs('Get_item')?['body/SPENTPFYP7'], 0)\r\n          ),\r\n          coalesce(outputs('Get_item')?['body/SPENTPFYP8'], 0)\r\n        ),\r\n        coalesce(outputs('Get_item')?['body/SPENTPFYP9'], 0)\r\n      ),\r\n      coalesce(outputs('Get_item')?['body/SPENTPFYP10'], 0)\r\n    ),\r\n    coalesce(outputs('Get_item')?['body/SPENTPFYP11'], 0)\r\n  ),\r\n  add(\r\n    add(\r\n      add(\r\n        add(\r\n          add(\r\n            add(\r\n              add(\r\n                add(\r\n                  add(\r\n                    add(\r\n                      add(\r\n                        coalesce(outputs('Get_item')?['body/SPENTPFYP12'], 0),\r\n                        coalesce(outputs('Get_item')?['body/SPENTCFYP1'], 0)\r\n                      ),\r\n                      coalesce(outputs('Get_item')?['body/SPENTCFYP2'], 0)\r\n                    ),\r\n                    coalesce(outputs('Get_item')?['body/SPENTCFYP3'], 0)\r\n                  ),\r\n                  coalesce(outputs('Get_item')?['body/SPENTCFYP4'], 0)\r\n                ),\r\n                coalesce(outputs('Get_item')?['body/SPENTCFYP5'], 0)\r\n              ),\r\n              coalesce(outputs('Get_item')?['body/SPENTCFYP6'], 0)\r\n            ),\r\n            coalesce(outputs('Get_item')?['body/SPENTCFYP7'], 0)\r\n          ),\r\n          coalesce(outputs('Get_item')?['body/SPENTCFYP8'], 0)\r\n        ),\r\n        coalesce(outputs('Get_item')?['body/SPENTCFYP9'], 0)\r\n      ),\r\n      coalesce(outputs('Get_item')?['body/SPENTCFYP10'], 0)\r\n    ),\r\n    add(\r\n      coalesce(outputs('Get_item')?['body/SPENTCFYP11'], 0),\r\n      coalesce(outputs('Get_item')?['body/SPENTCFYP12'], 0)\r\n    )\r\n  )\r\n)"
+          }
+        },
+        "invar_-_spentpct": {
+          "runAfter": {
+            "setvar_-_totalspent": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0c9a180b-3ee2-4a94-9a57-368aa6084939"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "varSpentPct",
+                "type": "float",
+                "value": "@div(variables('varSpentTotal'),outputs('Get_item')?['body/RPABudget'])"
+              }
+            ]
+          }
+        },
+        "Condition_1": {
+          "actions": {
+            "Send_an_HTTP_request_to_SharePoint_1": {
+              "runAfter": {
+                "Send_an_email_(V2)_2": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "0039a278-e8f4-4069-8b88-13004b65f778"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+                  "parameters/method": "POST",
+                  "parameters/uri": "_api/web/lists/getbytitle('AdminCapEx')/items(@{outputs('Get_item')?['body/ID']})",
+                  "parameters/headers": {
+                    "Accept": "application/json;odata=nometadata",
+                    "Content-Type": "application/json;odata=nometadata",
+                    "IF-MATCH": "*",
+                    "X-HTTP-Method": "MERGE"
+                  },
+                  "parameters/body": "{\n\"SpentOver110_Notified\": true\n}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "HttpRequest"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "Send_an_email_(V2)_2": {
+              "metadata": {
+                "operationMetadataId": "0497ac56-0d1e-4011-a53a-558c4007c4bb"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "emailMessage/To": "@outputs('Get_item')?['body/nombre/Email']",
+                  "emailMessage/Subject": "[ALLOPS] Budget alert - Proyecto  @{outputs('Get_item')?['body/Title']}",
+                  "emailMessage/Body": "\n\n  \n    <table cellpadding=\"0\" cellspacing=\"0\" style=\"background:#f3f4f6;padding:24px 0;\">\n      <tbody><tr>\n        <td style=\"padding:0 12px;\">\n          <!-- Container -->\n          <table cellpadding=\"0\" cellspacing=\"0\" style=\"width:1000px;max-width:1000px;background:#ffffff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;\">\n            \n            <!-- Header -->\n            <tbody><tr>\n              <td style=\"background:#6d28d9;padding:18px 22px;\">\n                <div style=\"color:#ffffff;font-weight:700;font-size:18px;line-height:1.2;margin:0;\">\n                  ALLOPS · CapEx Alert\n                </div>\n                <div style=\"color:#ede9fe;font-size:12px;line-height:1.2;margin-top:6px;\">\n                  Spent vs Budget · 110% alcanzado\n                </div>\n              </td>\n            </tr>\n\n            <!-- Body -->\n            <tr>\n              <td style=\"padding:22px;\">\n                <div style=\"font-family:Segoe UI, Arial, sans-serif;color:#111827;\">\n                  <div style=\"font-size:18px;font-weight:700;margin:0 0 14px 0;\">\n                    Hola @{first(split(outputs('Get_item')?['body/nombre/DisplayName'], ' '))}\n                  </div>\n\n@{outputs('Compose_1')}              \n\n<!-- Spacer -->\n<table cellpadding=\"0\" cellspacing=\"0\">\n  <tbody><tr>\n    <td style=\"height:20px; line-height:20px; font-size:0;\">&nbsp;</td>\n  </tr>\n</tbody></table>\n\n                  <!-- Main message box -->\n                  <table cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;border:1px solid #d1d5db;border-radius:12px;\">\n                    <tbody><tr>\n                      <td style=\"padding:18px;color:#111827;font-size:14px;line-height:1.6;\">\n                        <p style=\"margin: 0px 0px 12px 0px;\">\n                          Al actualizar nuestros registros hemos detectado que las partidas <b>gastadas</b> (SPENT) del proyecto\n                          @{variables('cfg')['varLink']} alcanzaron los <b>CHF @{formatNumber(variables('varSpentTotal'),'0.0')}</b>.\n                          Este valor representa el <b>(@{formatNumber(variables('spentpercent'),'0.0')}%)</b> del budget aprobado (<b>CHF @{outputs('Get_item')?['body/RPABudget']}</b>).\n                          En valores netos, se han gastado <b>CHF @{variables('extraspentvalue')} (@{formatNumber(variables('extraspentpct'),'0.0')}%)</b> por encima del valor máximo absoluto (<b>110%</b>)\n                          según el manual de inversiones.\n                        </p>\n\n                        <p style=\"margin:0 0 12px 0;\">\n                          Además de reportar el desvío frente a control interno te sugerimos explores la posibilidad de solicitar una ampliación de fondos en la <a href=\"@{outputs('Get_item')?['body/RPAID_x0023_']}\">herramienta de aprobación de inversiones</a>, siguiendo lo indicado en el <a href=\"https://sikacloud.sharepoint.com/:f:/r/sites/msTeams-4053-796_Internal-Internal/Shared%20Documents/Templates/Investments/Investment%20Manual?csf=1&amp;web=1&amp;e=1N0IVQ\">manual de inversiones</a>. \n                        </p>\n                      </td>\n                    </tr>\n                  </tbody></table>\n\n                  <!-- Quick links -->\n                  <div style=\"font-size:12px;color:#6b7280;line-height:1.5;margin-top:14px;\">\n                    <b>Accesos rápidos:</b>\n                    @{variables('cfg')['costtracklink']}\n                    <span style=\"color:#c7c9d1;\">&nbsp;•&nbsp;</span>\n                    @{variables('cfg')['bluefld_link']}\n                    <span style=\"color:#c7c9d1;\">&nbsp;•&nbsp;</span>\n                    <a href=\"@{outputs('Get_item')?['body/RPAID_x0023_']}\">Aprobación / ampliación</a>\n                  </div>\n\n                  <div style=\"height:16px;line-height:16px;font-size:16px;\">&nbsp;</div>\n\n                  <div style=\"font-size:14px;line-height:1.6;color:#111827;\">\n                    Saludos cordiales.<br>\n                  </div>\n\n                  <div style=\"height:14px;line-height:14px;font-size:14px;\">&nbsp;</div>\n@{outputs('Compose_-_Foto_ALLOPS')}\n                  <div style=\"font-size:11px;color:#9ca3af;line-height:1.4;border-top:1px solid #e5e7eb;padding-top:12px;\">\n                    Este correo fue generado automáticamente. Si creés que es un error,  contactá al equipo de Ingeniería copiado en este correo.\n\n                  </div>\n                </div>\n              </td>\n            </tr>\n\n          </tbody></table>\n          <!-- /Container -->\n        </td>\n      </tr>\n    </tbody></table>\n  ",
+                  "emailMessage/Cc": "@outputs('Compose_-_correos_ing')",
+                  "emailMessage/Importance": "Normal"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365",
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {
+            "Initialize_variable_3": [
+              "Succeeded"
+            ]
+          },
+          "else": {
+            "actions": {}
+          },
+          "expression": {
+            "and": [
+              {
+                "greaterOrEquals": [
+                  "@variables('varSpentPct')",
+                  1.1
+                ]
+              },
+              {
+                "not": {
+                  "equals": [
+                    "@outputs('Get_item')?['body/SpentOver110_Notified']",
+                    true
+                  ]
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e0a7d8f8-0cde-4cf0-8098-d85d28d61541"
+          },
+          "type": "If"
+        },
+        "in_var_-_Objeto_de_enlaces": {
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "90e151d3-0f35-49f2-a0cb-617ee1e5c645"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "cfg",
+                "type": "object",
+                "value": {
+                  "varLink": "<a href='@{outputs('Get_item')?['body/{Link}']}'>@{outputs('Get_item')?['body/Title']}_@{outputs('Get_item')?['body/Site/Value']}_@{replace(replace(replace(replace(outputs('Get_item')?['body/RPA_x0020_Name'],'/',' - '),'#','-'),'%','-'),'''','’')}</a>",
+                  "ctlink": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     outputs('Get_item')?['body/Company_x0020_ISO_x0020_Cod/Value'],'_',outputs('Get_item')?['body/Site/Value'],'/',\r\n     string(outputs('Get_item')?['body/Fiscalyear']), '/',\r\n     outputs('Get_item')?['body/Title'],'_',outputs('Get_item')?['body/Site/Value'],'_',\r\n     replace(replace(replace(replace(outputs('Get_item')?['body/RPA_x0020_Name'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/03.Eng. Manu. Technology/02.CostCtrl',\r\n     '''>archivo de control de costos</a>')}",
+                  "bluefld_link": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     outputs('Get_item')?['body/Company_x0020_ISO_x0020_Cod/Value'],'_',outputs('Get_item')?['body/Site/Value'],'/',\r\n     string(outputs('Get_item')?['body/Fiscalyear']), '/',\r\n     outputs('Get_item')?['body/Title'],'_',outputs('Get_item')?['body/Site/Value'],'_',\r\n     replace(replace(replace(replace(outputs('Get_item')?['body/RPA_x0020_Name'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '''>Carpeta azul</a>')}",
+                  "costtracklink": "@{concat('<a href=''',\r\n     'https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal/',\r\n     outputs('Get_item')?['body/Company_x0020_ISO_x0020_Cod/Value'],'_',outputs('Get_item')?['body/Site/Value'],'/',\r\n     string(outputs('Get_item')?['body/Fiscalyear']), '/',\r\n     outputs('Get_item')?['body/Title'],'_',outputs('Get_item')?['body/Site/Value'],'_',\r\n     replace(replace(replace(replace(outputs('Get_item')?['body/RPA_x0020_Name'],'/',' - '),'#','-'),'%','-'),'''','’'),\r\n     '/03.Eng. Manu. Technology/02.CostCtrl',\r\n     '''>Cost Tracking</a>')}"
+                }
+              }
+            ]
+          }
+        },
+        "invar_-_commpct*100": {
+          "runAfter": {
+            "invar_-_commpct": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "17ac4e15-1f6f-4cbc-952b-521514ce6fd9"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "commpercent",
+                "type": "float",
+                "value": "@mul(variables('varCommPct'),100)"
+              }
+            ]
+          }
+        },
+        "invar_-_extracommvalue": {
+          "runAfter": {
+            "invar_-_commpct*100": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e129919c-9cb4-42d8-8a90-50acecdaf0fd"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "extracommvalue",
+                "type": "string",
+                "value": "@formatNumber(\r\n    sub(variables('varCommTotal'), mul(outputs('Get_item')?['body/RPABudget'], 1.1)),\r\n    '0'\r\n)\r\n"
+              }
+            ]
+          }
+        },
+        "invar_-_extracommmpct": {
+          "runAfter": {
+            "invar_-_extracommvalue": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b6a854e6-7285-4fe2-ada1-a658cdcb5705"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "extracommpct",
+                "type": "float",
+                "value": "@sub(variables('commpercent'),110)"
+              }
+            ]
+          }
+        },
+        "SharepPoint_HTTP_-_miembros_de_ing": {
+          "runAfter": {
+            "in_var_-_Objeto_de_enlaces": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "632d9b9e-d1e4-4cc4-8099-005cf45b8c5b"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "parameters/method": "GET",
+              "parameters/uri": "/_api/web/sitegroups/getByName('AR OPS Engineering')/users?$select=Email,UserPrincipalName",
+              "parameters/headers": {
+                "Accept": "application/json;odata=nometadata"
+              }
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline-1",
+              "operationId": "HttpRequest"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Buscamos los miembros del grupo"
+        },
+        "Apply_to_each_2": {
+          "foreach": "@body('SharepPoint_HTTP_-_miembros_de_ing')?['value']",
+          "actions": {
+            "Append_to_array_variable_-_correos_de_miembros_de_ing": {
+              "metadata": {
+                "operationMetadataId": "7fecb799-ccae-4a26-b851-8417b46c21ab"
+              },
+              "type": "AppendToArrayVariable",
+              "inputs": {
+                "name": "engemail",
+                "value": "@coalesce(item()?['Email'], item()?['UserPrincipalName'])"
+              }
+            }
+          },
+          "runAfter": {
+            "SharepPoint_HTTP_-_miembros_de_ing": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "ef82e10e-762d-451a-9243-094527d5a47c"
+          },
+          "type": "Foreach"
+        },
+        "Initialize_variable": {
+          "runAfter": {
+            "Get_item": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b9489bbf-7bee-4355-a341-5e4bf6cb2bc1"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "engemail",
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "Compose_-_correos_ing": {
+          "runAfter": {
+            "Apply_to_each_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d2117875-c4d1-4291-bd32-006e925115ec"
+          },
+          "type": "Compose",
+          "inputs": "@join(variables('engemail'), ';')",
+          "description": "Se juntan con \";\" de por medio para poder ponerlo como CC del correo."
+        },
+        "Get_file_content": {
+          "runAfter": {
+            "Compose_-_correos_ing": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-06%2b115511.png": "/Shared Documents/Images/Captura de pantalla 2026-02-06 115511.png",
+            "operationMetadataId": "2a6dfca8-2214-4f28-b768-251a5a193a69"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "id": "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-06%2b115511.png",
+              "inferContentType": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetFileContent"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Compose": {
+          "runAfter": {
+            "Get_file_content": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f91fd1f6-169c-4e58-a4c2-d60cc614c4ec"
+          },
+          "type": "Compose",
+          "inputs": "@concat(\r\n  '<img src=\"',\r\n  dataUri(body('Get_file_content')),\r\n  '\" alt=\"Warning\" width=\"300\" />'\r\n)"
+        },
+        "Get_file_-_Foto_ALLOPS": {
+          "runAfter": {
+            "Compose": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "507e36c9-5d2d-4b38-928f-3943c837da44"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "path": "/Shared Documents/Images/All Ops/ALL OPS.jpg",
+              "inferContentType": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetFileContentByPath"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "description": "Se obtiene la imagen de firma."
+        },
+        "Compose_-_Foto_ALLOPS": {
+          "runAfter": {
+            "Get_file_-_Foto_ALLOPS": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "736b23bd-cbcf-4863-8c22-25dcaafe388e"
+          },
+          "type": "Compose",
+          "inputs": "@concat(\r\n  '<img src=\"',\r\n  dataUri(body('Get_file_-_Foto_ALLOPS')),\r\n  '\" alt=\"ALL OPS\" width=\"500\" />'\r\n)",
+          "description": "Se ejecuta un compose para añadir la imagen de firma al correo."
+        },
+        "invar_-_spentpct*100": {
+          "runAfter": {
+            "invar_-_spentpct": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "spentpercent",
+                "type": "float",
+                "value": "@mul(variables('varSpentPct'),100)"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_2": {
+          "runAfter": {
+            "invar_-_spentpct*100": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "extraspentvalue",
+                "type": "string",
+                "value": "@formatNumber(\r\n    sub(variables('varSpentTotal'), mul(outputs('Get_item')?['body/RPABudget'], 1.1)),\r\n    '0'\r\n)\r\n"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_3": {
+          "runAfter": {
+            "Initialize_variable_2": [
+              "Succeeded"
+            ]
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "extraspentpct",
+                "type": "float",
+                "value": "@sub(variables('spentpercent'),110)"
+              }
+            ]
+          }
+        },
+        "Get_file_content_1": {
+          "runAfter": {
+            "Compose_-_Foto_ALLOPS": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-06%2b115511.png": "/Shared Documents/Images/Captura de pantalla 2026-02-06 115511.png",
+            "operationMetadataId": "2a6dfca8-2214-4f28-b768-251a5a193a69",
+            "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-10%2b105006.png": "/Shared Documents/Images/Captura de pantalla 2026-02-10 105006.png",
+            "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-10%2b112344.png": "/Shared Documents/Images/Captura de pantalla 2026-02-10 112344.png"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "https://sikacloud.sharepoint.com/sites/msTeams-4053-796_Internal-Internal",
+              "id": "%252fShared%2bDocuments%252fImages%252fCaptura%2bde%2bpantalla%2b2026-02-10%2b112344.png",
+              "inferContentType": true
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetFileContent"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Compose_1": {
+          "runAfter": {
+            "Get_file_content_1": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "f91fd1f6-169c-4e58-a4c2-d60cc614c4ec"
+          },
+          "type": "Compose",
+          "inputs": "@concat(\r\n  '<img src=\"',\r\n  dataUri(body('Get_file_content_1')),\r\n  '\" alt=\"Alert\" width=\"300\" />'\r\n)"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}
