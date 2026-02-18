@@ -1,4 +1,14 @@
-## General architecture
+## General Architecture
+
+The ALLOPS automation framework is composed of multiple Power Automate flows that together manage the CapEx project lifecycle:
+
+- Project provisioning
+- Governance enforcement (status & complexity)
+- Financial control (110% rule)
+
+---
+
+# 1️⃣ CPX Initialization (Provisioning Layer)
 
 High-level flow:
 
@@ -61,3 +71,98 @@ High-level flow:
      - `varError` is updated indicating in which stage the error occurred.  
      - Details are logged (for example in a logs list or in the project item itself).  
      - Optionally, an alert email can be sent to the Engineering / IT team.
+---
+
+# 2️⃣ CPX Closure Automation (Governance Layer)
+
+This flow enforces reporting consistency and eFTE logic.
+
+## Trigger
+
+- Trigger: **When an item is modified**
+- Runs on AR / PE / Master lists.
+
+## Logic
+
+### Case 1 – Status becomes "Done" or "Closed"
+
+→ Automatically sets: CPX Complexity = "All (CPX Closure)"
+
+### Case 2 – Status changes from "Done/Closed" back to "In progress"
+
+→ Automatically sets: CPX Complexity = "Low"
+
+
+### Any other status transition
+
+→ No modification is applied.
+
+This ensures:
+- Correct reporting behavior.
+- Proper eFTE calculation alignment.
+- Controlled lifecycle governance.
+
+---
+
+# 3️⃣ CPX Warning – 110% Budget Rule (Financial Control Layer)
+
+This flow implements automated budget monitoring.
+
+## Trigger
+
+- Trigger: **When an item is created or modified**
+- Evaluates committed amounts (COMM).
+
+## Calculation Logic
+
+Total committed is calculated dynamically as:
+
+- Committed till PFY
+- COMMPFY P1–P12
+- COMMCFY P1–P12
+
+All values are summed using `coalesce()` to prevent null errors.
+
+## Rule
+
+If: Total Committed > 110% of Approved Budget
+
+
+Then:
+
+- Sends a structured HTML alert email to the PM.
+- Highlights:
+  - Absolute overcommit value.
+  - Percentage deviation.
+- Suggests:
+  - Reviewing open POs/contracts.
+  - Initiating fund extension if required.
+
+## Anti-duplication logic
+
+Optional logic can be implemented to:
+- Avoid repeated alerts.
+- Send notification only when crossing the 110% threshold.
+
+---
+
+# Architecture Summary
+
+The solution operates in three layers:
+
+1. **Provisioning Layer**
+   - Project creation
+   - Folder generation
+   - Teams integration
+
+2. **Governance Layer**
+   - Status-based complexity enforcement
+   - Reporting integrity
+
+3. **Financial Control Layer**
+   - Budget monitoring
+   - Threshold alerting
+   - Risk prevention
+
+Together, these flows transform ALLOPS from a provisioning tool into a structured CapEx governance framework.
+
